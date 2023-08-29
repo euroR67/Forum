@@ -15,20 +15,9 @@
             parent::connect();
         }
 
-        // méthode pour trouver tout les posts d'un topic
-        public function findPostsByTopic($id){
-
-            $sql = "
-                SELECT *
-                FROM ".$this->tableName." p
-                WHERE p.id_topic = :id
-                ";
-
-            return $this->getMultipleResults(
-                DAO::select($sql, ["id" => $id]), 
-                $this->className
-            );
-
+        // méthode pour afficher tout les topics appartenant à une catégorie depuis l'id de la catégorie
+        public function categorieTopics() {
+            
         }
 
     }
