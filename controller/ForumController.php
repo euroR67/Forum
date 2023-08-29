@@ -41,14 +41,30 @@
         }
         
         
-        public function listCategorieTopics() {
+        public function listCategorieTopics($id) {
 
             $topicManager = new TopicManager();
+            $categorieManager = new CategorieManager();
 
             return [
-                "view" => VIEW_DIR."forum/topicsCategorie.php",
+                "view" => VIEW_DIR."forum/TopicsByCategorie.php",
                 "data" => [
-                    "topics" => $topicManager->categorieTopics(["dateCreation", "DESC"])
+                    "topics" => $topicManager->findTopicsByCategorie($id,["dateCreation", "DESC"]),
+                    "categories" => $categorieManager->findOneById($id)
+                ]
+            ];
+
+        }
+
+
+        public function listPostsByTopic() {
+
+            $postManager = new PostManager();
+
+            return [
+                "view" => VIEW_DIR."forum/PostsByTopics.php",
+                "data" => [
+                    "posts" => $postManager->findTopicsByCategorie(["dateCreation", "DESC"])
                 ]
             ];
 

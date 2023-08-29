@@ -6,7 +6,7 @@
     final class Post extends Entity {
 
         private $id;
-        private $titre;
+        private $texte;
         private $user;
         private $dateCreation;
 
@@ -25,14 +25,14 @@
                 return $this;
         }
 
-        // Get the value of titre
-        public function getTitre() {
-                return $this->titre;
+        // Get the value of texte
+        public function getTexte() {
+                return $this->texte;
         }
 
-        // Set the value of titre
-        public function setTitre($titre) {
-                $this->titre = $titre;
+        // Set the value of texte
+        public function setTexte($texte) {
+                $this->texte = $texte;
                 return $this;
         }
 
