@@ -26,9 +26,9 @@
         
         }
 
+        // Méthode pour récupérer les catégories et les envoyer à la vue
         public function listCategories(){
 
-            // On récupère les catégories et on les envoie à la vue
             $categorieManager = new CategorieManager();
 
             return [
@@ -40,5 +40,18 @@
 
         }
         
+        
+        public function listCategorieTopics() {
+
+            $topicManager = new TopicManager();
+
+            return [
+                "view" => VIEW_DIR."forum/topicsCategorie.php",
+                "data" => [
+                    "topics" => $topicManager->categorieTopics(["dateCreation", "DESC"])
+                ]
+            ];
+
+        }
 
     }

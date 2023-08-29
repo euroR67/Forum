@@ -17,7 +17,21 @@
 
         // méthode pour afficher tout les topics appartenant à une catégorie depuis l'id de la catégorie
         public function categorieTopics() {
-            
+
+            $orderQuery = ($order) ?                 
+                "ORDER BY ".$order[0]. " ".$order[1] :
+                "";
+
+            $sql = "SELECT *
+                    FROM ".$this->tableName." a
+                    WHERE a.categorie_id = $id;
+                    ".$orderQuery;
+
+            return $this->getMultipleResults(
+                DAO::select($sql), 
+                $this->className
+            );
+
         }
 
     }
