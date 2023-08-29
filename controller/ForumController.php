@@ -41,7 +41,7 @@
         }
         
         
-        public function listCategorieTopics($id) {
+        public function listTopicsByCategorie($id) {
 
             $topicManager = new TopicManager();
             $categorieManager = new CategorieManager();
@@ -57,14 +57,18 @@
         }
 
 
-        public function listPostsByTopic() {
+        public function listPostsByTopic($id) {
 
             $postManager = new PostManager();
+            $topicManager = new TopicManager();
+            $categorieManager = new CategorieManager();
 
             return [
                 "view" => VIEW_DIR."forum/PostsByTopics.php",
                 "data" => [
-                    "posts" => $postManager->findTopicsByCategorie(["dateCreation", "DESC"])
+                    "posts" => $postManager->findPostsByTopic($id, ["dateCreation", "DESC"]),
+                    "categories" => $categorieManager->findOneById($id),
+                    "topics" => $topicManager->findOneById($id)
                 ]
             ];
 

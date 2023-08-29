@@ -1,3 +1,19 @@
 * {
     font-family: sans-serif;
 }
+
+table {
+    width: 60%;
+    border-collapse: collapse;
+    border: none;
+}
+td {
+    background-color: rgb(215, 244, 253);
+    padding: 10px;
+    text-align: start;
+  }
+  
+th {
+    text-align: start;
+    padding: 10px;
+}

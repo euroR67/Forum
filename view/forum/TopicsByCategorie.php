@@ -2,24 +2,46 @@
 
 $topics = $result["data"]['topics'];
 $categories = $result["data"]['categories'];
-// var_dump($categories); die;
+
 ?>
 
-<h1><?=$categories->getNomCategorie()?></h1>
+<h1> <a href="index.php?ctrl=forum&action=listCategories">Catégories</a> > <?=$categories->getNomCategorie()?></h1>
 
 <?php
 
-if (empty($topics)) {
-    echo "<p>Aucun sujet n'a été trouvé dans cette catégorie.</p>";
-} else {
-    foreach($topics as $topic ){
-
-        ?>
-        <p>
-            <a href="index.php?ctrl=forum&action=findPostsByTopics&id=<?=$topic->getId()?>">
-                <?=$topic->getTitre()?>
-            </a>
-        </p>
-        <?php
-    }
-}
+if (empty($topics)) : ?>
+    <p>Aucun sujet n'a été trouvé dans cette catégorie.</p>
+<?php else : ?>
+    <table border=1>
+        <tr>
+            <th>Sujet</th>
+            <th>Auteur</th>
+            <th>NB Mess</th>
+            <th>Date</th>
+        </tr>
+        <?php foreach($topics as $topic) : ?>
+            <tr>
+                <td>
+                    <a href="index.php?ctrl=forum&action=listPostsByTopic&id=<?= $topic->getId() ?>">
+                        <?= $topic->getTitre() ?>
+                    </a>
+                </td>
+                <td>
+                    <a href="">
+                        
+                    </a>
+                </td>
+                <td>
+                    <a href="">
+                        3
+                    </a>
+                </td>
+                <td>
+                    <a href="">
+                        <?= $topic->getDateCreation() ?>
+                    </a>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+    </table>
+<?php endif; ?>
