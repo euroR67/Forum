@@ -19,8 +19,11 @@
         public function findPostsByTopic($id) {
 
             $sql = "SELECT *
-                    FROM ".$this->tableName." p
+                    FROM ".$this->tableName." p 
+                    inner join topic t on p.topic_id = t.id_topic
+                    inner join categorie c on t.categorie_id = c.id_categorie
                     WHERE p.topic_id = :id";
+            // var_dump($sql);
             
                    
 

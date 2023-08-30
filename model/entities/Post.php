@@ -9,6 +9,7 @@
         private $texte;
         private $user;
         private $dateCreation;
+        private $topic;
 
         public function __construct($data) {
             $this->hydrate($data);
@@ -17,6 +18,17 @@
         // Get the value of id
         public function getId() {
                 return $this->id;
+        }
+
+        // Get the value of topic
+        public function getTopic() {
+                return $this->topic;
+        }
+
+        // Set the value of topic
+        public function setTopic($topic) {
+                $this->topic = $topic;
+                return $this;
         }
 
         // Set the value of id

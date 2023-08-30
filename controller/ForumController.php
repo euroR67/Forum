@@ -8,6 +8,7 @@
     use Model\Managers\TopicManager;
     use Model\Managers\PostManager;
     use Model\Managers\CategorieManager;
+    use Model\Managers\UserManager;
     
     class ForumController extends AbstractController implements ControllerInterface{
 
@@ -67,7 +68,7 @@
                 "view" => VIEW_DIR."forum/PostsByTopics.php",
                 "data" => [
                     "posts" => $postManager->findPostsByTopic($id, ["dateCreation", "DESC"]),
-                    "categories" => $categorieManager->findOneById($id),
+                    
                     "topics" => $topicManager->findOneById($id)
                 ]
             ];

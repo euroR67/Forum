@@ -28,14 +28,10 @@ if (empty($topics)) : ?>
                 </td>
                 <td>
                     <a href="">
-                        
+                    [insérer le script]
                     </a>
                 </td>
-                <td>
-                    <a href="">
-                        3
-                    </a>
-                </td>
+                <td>[insérer le script]</td>
                 <td>
                     <a href="">
                         <?= $topic->getDateCreation() ?>

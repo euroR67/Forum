@@ -10,9 +10,24 @@
         private $user;
         private $dateCreation;
         private $closed;
+        private $categorie;
+
+
 
         public function __construct($data){         
             $this->hydrate($data);        
+        }
+
+
+        // Get the value of categorie
+        public function getCategorie() {
+                return $this->categorie;
+        }
+
+        // Set the value of categorie
+        public function setCategorie($categorie) {
+                $this->categorie = $categorie;
+                return $this;
         }
  
         // Get the value of id

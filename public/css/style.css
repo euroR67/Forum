@@ -1,6 +1,10 @@
 * {
     font-family: sans-serif;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
 }
+
 
 table {
     width: 60%;
@@ -16,4 +20,53 @@ td {
 th {
     text-align: start;
     padding: 10px;
+}
+
+tr:nth-child(even) {
+    background-color: rgb(255, 255, 255);
+}
+
+tr:nth-child(odd) {
+    background-color: rgb(215, 244, 253);
+}
+
+tr:hover {
+    background-color: rgb(255, 255, 255);
+}
+
+/* ================== Début vue topic ================== */
+
+.posts-container {
+    width: 90%;
+    margin: auto;
+    margin-block: 50px;
+}
+
+.post-block {
+    background-color: rgb(235, 235, 235);
+    padding: 15px;
+    width: 80%;
+    margin: auto;
+}
+
+.post-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid grey;
+    padding-block: 10px;
+}
+
+.post-info figure img {
+    border-radius: 100%;
+}
+
+.user-date {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.post-block > p {
+    margin-block: 20px;
 }
