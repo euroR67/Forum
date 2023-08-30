@@ -8,7 +8,7 @@
         private $id;
         private $texte;
         private $user;
-        private $dateCreation;
+        private $datePost;
         private $topic;
 
         public function __construct($data) {
@@ -60,14 +60,16 @@
         }
 
         // Get the value of dateCreation
-        public function getDateCreation(){
-            $formattedDate = $this->dateCreation->format("d/m/Y, H:i:s");
+        // public function getDateCreation(){
+        public function getDatePost(){
+            $formattedDate = $this->datePost->format("d/m/Y, H:i:s");
             return $formattedDate;
         }
 
         // Set the value of dateCreation
-        public function setDateCreation($date){
-            $this->dateCreation = new \DateTime($date);
+        // public function setDateCreation($date){
+        public function setDatePost($date){
+            $this->datePost = new \DateTime($date);
             return $this;
         }
     }

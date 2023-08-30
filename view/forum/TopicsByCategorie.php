@@ -34,7 +34,7 @@ if (empty($topics)) : ?>
                 <td>[insérer le script]</td>
                 <td>
                     <a href="">
-                        <?= $topic->getDateCreation() ?>
+                        <?= $topic->getDateTopic() ?>
                     </a>
                 </td>
             </tr>

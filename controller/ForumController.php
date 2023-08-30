@@ -21,7 +21,7 @@
             return [
                 "view" => VIEW_DIR."forum/listTopics.php",
                 "data" => [
-                    "topics" => $topicManager->findAll(["dateCreation", "DESC"])
+                    "topics" => $topicManager->findAll(["dateTopic", "DESC"])
                 ]
             ];
         
@@ -50,7 +50,7 @@
             return [
                 "view" => VIEW_DIR."forum/TopicsByCategorie.php",
                 "data" => [
-                    "topics" => $topicManager->findTopicsByCategorie($id,["dateCreation", "DESC"]),
+                    "topics" => $topicManager->findTopicsByCategorie($id,["dateTopic", "DESC"]),
                     "categories" => $categorieManager->findOneById($id)
                 ]
             ];
@@ -62,14 +62,13 @@
 
             $postManager = new PostManager();
             $topicManager = new TopicManager();
-            $categorieManager = new CategorieManager();
 
             return [
                 "view" => VIEW_DIR."forum/PostsByTopics.php",
                 "data" => [
-                    "posts" => $postManager->findPostsByTopic($id, ["dateCreation", "DESC"]),
+                    "posts" => $postManager->findPostsByTopic($id, ["datePost", "ASC"]),
                     
-                    "topics" => $topicManager->findOneById($id)
+                    "topic" => $topicManager->findOneById($id)
                 ]
             ];
 

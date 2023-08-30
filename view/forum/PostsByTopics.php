@@ -1,22 +1,18 @@
 <?php
 
-$posts = $result["data"]['posts'];
-$topics = $result["data"]['topics'];
-
+$posts = iterator_to_array($result["data"]['posts'], false);
+$topic = $result["data"]['topic'];
+// var_dump($posts); die;
 foreach($posts as $post){
     $premiereValeur = $post ;
     break ;
 }
 
-
-
-
 ?>
-<!--....... &id=<  ?= $premiereValeur->getTopic()->getCategorie()->getId()  ?> -->
 <h1> 
     <a href="index.php?ctrl=forum&action=listCategories">Catégories</a> > 
     <a href="index.php?ctrl=forum&action=listTopicsByCategorie&id=<?= $premiereValeur->getTopic()->getCategorie()->getId() ?>"><?=$premiereValeur->getTopic()->getCategorie()->getNomCategorie() ?></a>
-    <?= $topics->getTitre() ?>
+    <?= $topic->getTitre() ?>
 </h1>
 
 <div class="posts-container">
@@ -28,7 +24,7 @@ foreach($posts as $post){
                 </figure>
                 <div class="user-date">
                     <a href="#">[Script user]</a>
-                    <p>Le <?= $post->getDateCreation() ?></p>
+                    <p>Le <?= $post->getDatePost() ?></p>
                 </div>
             </div>
             <p><?= $post->getTexte() ?></p>
