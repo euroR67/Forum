@@ -11,10 +11,35 @@
         private $dateTopic;
         private $closed;
         private $categorie;
+        private $nbPosts;
+        private $lastPostDate;
 
 
         public function __construct($data){         
             $this->hydrate($data);        
+        }
+
+        // Get the value of lastPostDate
+        public function getLastPostDate() {
+                $formattedDate = $this->lastPostDate->format("d/m/Y, H:i:s");
+                return $formattedDate;
+        }
+
+        // Set the value of lastPostDate
+        public function setLastPostDate($lastPostDate) {
+                $this->lastPostDate = new \DateTime($lastPostDate);
+                return $this;
+        }
+
+        // Get the value of nbPosts
+        public function getNbPosts() {
+                return $this->nbPosts;
+        }
+
+        // Set the value of nbPosts
+        public function setNbPosts($nbPosts) {
+                $this->nbPosts = $nbPosts;
+                return $this;
         }
 
 

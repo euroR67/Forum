@@ -18,8 +18,6 @@
         // méthode pour afficher tout les topics appartenant à une catégorie depuis l'id de la catégorie
         public function findPostsByTopic($id) {
 
-            
-
             $sql = "SELECT *
                     FROM ".$this->tableName." p 
                     WHERE p.topic_id = :id 

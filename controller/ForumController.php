@@ -50,7 +50,7 @@
             return [
                 "view" => VIEW_DIR."forum/TopicsByCategorie.php",
                 "data" => [
-                    "topics" => $topicManager->findTopicsByCategorie($id,["dateTopic", "DESC"]),
+                    "topics" => $topicManager->findTopicsByCategorie($id,["dateTopic", "ASC"]),
                     "categories" => $categorieManager->findOneById($id)
                 ]
             ];

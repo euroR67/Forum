@@ -6,7 +6,7 @@ $topic = $result["data"]['topic'];
 ?>
 <h1> 
     <a href="index.php?ctrl=forum&action=listCategories">Catégories</a> > 
-    <a href="index.php?ctrl=forum&action=listTopicsByCategorie&id=<?= $topic->getCategorie()->getId() ?>"><?=$topic->getCategorie() ?></a>
+    <a href="index.php?ctrl=forum&action=listTopicsByCategorie&id=<?= $topic->getCategorie()->getId() ?>"><?=$topic->getCategorie() ?></a> >
     <?= $topic->getTitre() ?>
 </h1>
 
@@ -28,4 +28,3 @@ $topic = $result["data"]['topic'];
         </div>
     <?php } ?>
 </div>
-

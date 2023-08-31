@@ -17,7 +17,7 @@ if (empty($topics)) : ?>
             <th>Sujet</th>
             <th>Auteur</th>
             <th>NB Mess</th>
-            <th>Date</th>
+            <th>Dernier msg</th>
         </tr>
         <?php foreach($topics as $topic) : ?>
             <tr>
@@ -28,15 +28,31 @@ if (empty($topics)) : ?>
                 </td>
                 <td>
                     <a href="">
-                    [insérer le script]
+                        <?= $topic->getUser() ?>
                     </a>
                 </td>
-                <td>[insérer le script]</td>
+                <td><?= $topic->getNbPosts() ?></td>
                 <td>
-                    <a href="">
-                        <?= $topic->getDateTopic() ?>
-                    </a>
+                    <?php
+                        $lastPostDateStr = $topic->getLastPostDate(); // Récupérer la date du dernier post au format chaîne
+                        
+                        // Convertir la date du dernier post en objet DateTime avec un format spécifique
+                        $lastPostDate = DateTime::createFromFormat('d/m/Y, H:i:s', $lastPostDateStr);
+                        $currentDate = new DateTime();
+                        
+                        if ($lastPostDate !== false) { // Vérifier si la conversion a réussi
+                            if ($lastPostDate->format('Y-m-d') === $currentDate->format('Y-m-d')) {
+                                echo $lastPostDate->format('H:i:s');
+                            } else {
+                                echo $lastPostDate->format('d/m/Y');
+                            }
+                        } else {
+                            echo "Date invalide"; // En cas de conversion échouée
+                        }
+                    ?>
                 </td>
+
+
             </tr>
         <?php endforeach; ?>
     </table>

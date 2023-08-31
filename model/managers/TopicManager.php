@@ -18,12 +18,14 @@
         // méthode pour afficher tout les topics appartenant à une catégorie depuis l'id de la catégorie
         public function findTopicsByCategorie($id) {
 
-            $sql = "SELECT *
-                    FROM ".$this->tableName." t
-                    WHERE t.categorie_id = :id";
+            $sql = "SELECT t.*, 
+                    (SELECT COUNT(*) FROM post p WHERE p.topic_id = t.id_topic) AS nbPosts,
+                    (SELECT MAX(p.datePost) FROM post p WHERE p.topic_id = t.id_topic) AS lastPostDate
+                    FROM topic t
+                    WHERE t.categorie_id = :id
+                    ORDER BY lastPostDate DESC";
 
                    
-
             return $this->getMultipleResults(
                 DAO::select($sql, ['id' => $id]),
                 $this->className
