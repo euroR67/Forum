@@ -137,3 +137,23 @@ form label {
     font-weight: 600;
     margin-block: 10px;
 }
+
+/* Boutton nouveau sujet */
+.nv_sujet {
+    width: fit-content;
+    padding: 10px;
+    background-color: rgb(189, 222, 252);
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    margin-block: 10Px;
+}
+
+.nv_sujet a {
+    color: rgb(36, 36, 36);
+}
+
+.nv_sujet:hover {
+    background-color: rgb(176, 216, 253);
+}

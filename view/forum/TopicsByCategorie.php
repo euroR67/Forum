@@ -12,6 +12,9 @@ $categories = $result["data"]['categories'];
 if (empty($topics)) : ?>
     <p>Aucun sujet n'a été trouvé dans cette catégorie.</p>
 <?php else : ?>
+    <div class="nv_sujet">
+        <a href="index.php?ctrl=forum&action=ajoutTopic.php">Nouveau Sujet</a>
+    </div>
     <table border=1>
         <tr>
             <th>Sujet</th>

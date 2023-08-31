@@ -104,4 +104,32 @@
 
         }
 
+        // Méthode pour ajouter un sujet et un premier post
+        public function ajoutSujet($id){
+
+            $topicManager = new TopicManager();
+            $postManager = new PostManager();
+            $categorieManager = new CategorieManager();
+            $user = new UserManager();
+
+            $titre = $_POST['titre'];
+            $text = $_POST['text'];
+            $data = [
+                'titre'=> $titre ,
+                'categorie_id'=> $id,
+                'user_id'=> 1
+            ];
+
+            $topicManager->add($data);
+            $topic = $topicManager->findOneByTitre($titre);
+            $data = [
+                'texte'=> $text ,
+                'user_id'=> 1,
+                'topic_id'=> $topic->getId()
+            ];
+            
+            $postManager->add($data);
+            header('Location: index.php?ctrl=forum&action=listPostsByTopic&id='.$topic->getId());
+        }
+
     }
