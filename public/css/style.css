@@ -7,7 +7,7 @@
 
 
 table {
-    width: 60%;
+    min-width: 60%;
     border-collapse: collapse;
     border: none;
 }
@@ -21,7 +21,6 @@ th {
     text-align: start;
     padding: 10px;
 }
-
 /* ================== Début vue topic ================== */
 
 .posts-container {

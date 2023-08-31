@@ -41,7 +41,7 @@
 
         }
         
-        
+        // Méthode pour récupérer les topics d'une catégorie et les envoyer à la vue
         public function listTopicsByCategorie($id) {
 
             $topicManager = new TopicManager();
@@ -57,7 +57,7 @@
 
         }
 
-
+        // Méthode pour récupérer les posts d'un topic et les envoyer à la vue du topic
         public function listPostsByTopic($id) {
 
             $postManager = new PostManager();
@@ -66,8 +66,9 @@
             return [
                 "view" => VIEW_DIR."forum/PostsByTopics.php",
                 "data" => [
+                    // On appelle la méthode findPostsByTopic() du PostManager pour récupérer les posts d'un topic
                     "posts" => $postManager->findPostsByTopic($id, ["datePost", "ASC"]),
-                    
+                    // On appelle la méthode findOneById() du TopicManager pour récupérer les posts d'un topic
                     "topic" => $topicManager->findOneById($id)
                 ]
             ];
