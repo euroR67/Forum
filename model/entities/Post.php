@@ -12,7 +12,7 @@
         private $topic;
 
         public function __construct($data) {
-                $this->hydrate($data);
+            $this->hydrate($data);
         }
 
         // Get the value of id
@@ -61,29 +61,24 @@
 
         // Get the value of datePost
         public function getDatePost(){
-                $formattedDate = $this->datePost->format("d F Y à H:i:s");
-                
                 $formatter = new \IntlDateFormatter("fr_FR", \IntlDateFormatter::LONG, \IntlDateFormatter::NONE);
                 $timestamp = $this->datePost->getTimestamp();
-                $monthInFrench = $formatter->format($timestamp);
-                
-                // Utiliser preg_replace() pour remplacer uniquement le nom du mois
-                $formattedDate = preg_replace('/' . $this->datePost->format("F") . '/', $monthInFrench, $formattedDate, 1);
-                
+                $formattedDate = $formatter->format($timestamp);
+            
                 return $formattedDate;
-            }
+        }
             
             
-                      
+            
 
         // Set the value of datePost
         public function setDatePost($date){
-                $this->datePost = new \DateTime($date);
-                return $this;
+            $this->datePost = new \DateTime($date);
+            return $this;
         }
 
         public function __toString(){
-                return $this->texte;
+            return $this->texte;
         }
 
     }
