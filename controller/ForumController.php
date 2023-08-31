@@ -75,4 +75,33 @@
 
         }
 
+        // Méthode pour ajouter un post
+        public function addPost($id){
+          
+            $postManager = new PostManager();
+            $text = $_POST['text'];
+           
+           
+            $data = [
+                'texte'=> $text ,
+                'user_id'=> 1,
+                'topic_id'=> $id
+            ];
+
+            $postManager->add($data);
+            header('Location: index.php?ctrl=forum&action=listPostsByTopic&id='.$id);
+
+        }
+
+        // Méthode pour suppimer un post
+        public function deletePost($id){
+            $postManager = new PostManager();
+            $post = $postManager->findOneById($id);
+            $idTopic = $post->getTopic()->getId();
+
+            $postManager->delete($id);
+            header('Location: index.php?ctrl=forum&action=listPostsByTopic&id='.$idTopic);
+
+        }
+
     }

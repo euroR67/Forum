@@ -61,15 +61,12 @@
 
         // Get the value of datePost
         public function getDatePost(){
-                $formatter = new \IntlDateFormatter("fr_FR", \IntlDateFormatter::LONG, \IntlDateFormatter::NONE);
+                $formatter = new \IntlDateFormatter("fr_FR", \IntlDateFormatter::LONG, \IntlDateFormatter::SHORT);
                 $timestamp = $this->datePost->getTimestamp();
                 $formattedDate = $formatter->format($timestamp);
             
                 return $formattedDate;
         }
-            
-            
-            
 
         // Set the value of datePost
         public function setDatePost($date){

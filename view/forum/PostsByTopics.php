@@ -25,6 +25,12 @@ $topic = $result["data"]['topic'];
                 </div>
             </div>
             <p><?= $post->getTexte() ?></p>
+            <a href="index.php?ctrl=forum&action=deletePost&id=<?= $post->getId() ?>">SUPPRIMER</a>
         </div>
-    <?php } ?>
+        <?php } ?>
+        <form action="index.php?ctrl=forum&action=addPost&id=<?= $topic->getId() ?>" method="post" enctype="multipart/form-date">
+            <label>Répondre</label>
+            <textarea placeholder="Apporter une réponse au sujet.." name="text"></textarea>
+            <input type="submit" name="submit" value="POSTER">
+        </form>
 </div>

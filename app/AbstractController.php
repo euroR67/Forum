@@ -11,7 +11,6 @@
                 $url = $ctrl ? "/".$ctrl : "";
                 $url.= $action ? "/".$action : "";
                 $url.= $id ? "/".$id : "";
-                $url.= ".html";
             } else $url = "/";
             
             header("Location: $url");
