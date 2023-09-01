@@ -83,6 +83,52 @@ table {
     margin: auto;
 }
 
+.titre-sujet {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 80%;
+    margin: auto;
+}
+
+.titre-sujet div:first-child {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.titre-sujet div:first-child i {
+    font-size: 20px;
+    color: rgb(73, 73, 73);
+}
+
+.titre-sujet h2 {
+    color: rgb(68, 68, 68);
+    font-weight: 600;
+    font-size: 20px;
+}
+
+.titre-sujet div:last-child a {
+    background-color: rgb(189, 222, 252);
+    color: rgb(0, 0, 0);
+    font-weight: 600;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.titre-sujet div:last-child a:hover {
+    background-color: rgb(176, 216, 253);
+}
+
+.titre-sujet div:last-child a:last-child {
+    background-color: rgb(204, 16, 16);
+    color: #fff;
+}
+
+.titre-sujet div:last-child a:last-child:hover {
+    background-color: rgb(176, 16, 16);
+}
+
 .post-block {
     background-color: rgb(245, 244, 244);
     padding: 15px;
