@@ -89,7 +89,9 @@
             ];
 
             $postManager->add($data);
-            header('Location: index.php?ctrl=forum&action=listPostsByTopic&id='.$id);
+
+            // On redirige vers la page du topic
+            $this->redirectTo("forum", "listPostsByTopic", $id);
 
         }
 
@@ -114,6 +116,25 @@
 
             // On redirige vers la page du topic
             $this->redirectTo("forum", "listPostsByTopic", $idTopic);
+
+        }
+
+        // Méthode pour supprimer un sujet et tous les posts associés
+        public function deleteTopic($id){
+
+            // On instancie les managers
+            $topicManager = new TopicManager();
+
+            // On récupère l'id du topic
+            $topic = $topicManager->findOneById($id);
+            $idTopic = $topic->getId();
+
+            // On supprime le sujet et tous les posts associés
+            $topicManager->delete($idTopic);
+
+            // On redirige vers la liste des topics de la catégorie du sujet supprimé
+            $this->redirectTo("forum", "listTopicsByCategorie", $topic->getCategorie()->getId());
+            
 
         }
 
@@ -142,6 +163,25 @@
             
             // On redirige vers la page du sujet créé via l'id du sujet
             $this->redirectTo("forum", "listPostsByTopic", $newTopicId);
+        }
+
+        // Méthode pour modifier le titre d'un sujet
+        public function modifierSujet(){
+
+            // On instancie les managers
+            $topicManager = new TopicManager();
+
+            // On récupère le nouveau titre du sujet
+            $titre = filter_input(INPUT_POST, 'titre', FILTER_SANITIZE_SPECIAL_CHARS);
+
+            // On modifie le titre du sujet
+            $topicManager->update([
+                "id_topic" => $id,
+                "titre" => $titre]);
+
+            // On redirige vers la page du sujet modifié via l'id du sujet
+            $this->redirectTo("forum", "listPostsByTopic", $id);
+
         }
 
     }
