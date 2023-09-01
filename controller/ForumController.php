@@ -100,8 +100,7 @@
             $idTopic = $post->getTopic()->getId();
 
             $postManager->delete($id);
-            header('Location: index.php?ctrl=forum&action=listPostsByTopic&id='.$idTopic);
-
+            $this->redirectTo("forum", "listPostsByTopic", $idTopic);
         }
 
         // Méthode pour ajouter un sujet et un premier post

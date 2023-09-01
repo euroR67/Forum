@@ -25,7 +25,15 @@ $topic = $result["data"]['topic'];
                 </div>
             </div>
             <p><?= $post->getTexte() ?></p>
-            <a href="index.php?ctrl=forum&action=deletePost&id=<?= $post->getId() ?>">SUPPRIMER</a>
+            <?php
+                // Vérifier si le post n'est pas le premier post du topic
+                if (!$post->isFirstPost()) {
+                    // Afficher le bouton "SUPPRIMER" avec un lien vers l'action de suppression
+                    ?>
+                    <a href="index.php?ctrl=forum&action=deletePost&id=<?= $post->getId() ?>">SUPPRIMER</a>
+                    <?php
+                }
+                ?>
         </div>
         <?php } ?>
         <form action="index.php?ctrl=forum&action=addPost&id=<?= $topic->getId() ?>" method="post" enctype="multipart/form-date">
