@@ -93,35 +93,54 @@
 
         }
 
-        // Méthode pour suppimer un post
+        // Méthode pour suppimer un post sauf si c'est le premier post du topic avec findFirstPostByTopic()
         public function deletePost($id){
+
+            // On instancie les managers
             $postManager = new PostManager();
+
+            // On récupère l'id du topic du post
             $post = $postManager->findOneById($id);
             $idTopic = $post->getTopic()->getId();
+            
+            // On récupère l'id du premier post du topic
+            $firstPost = $postManager->findFirstPostByTopic($idTopic);
+           
+            $idFirstPost = $firstPost->getId();
+            // Si l'id du post est différent de l'id du premier post du topic, on supprime le post
+            if($id != $idFirstPost){
+                $postManager->delete($id);
+            }
 
-            $postManager->delete($id);
+            // On redirige vers la page du topic
             $this->redirectTo("forum", "listPostsByTopic", $idTopic);
+
         }
 
         // Méthode pour ajouter un sujet et un premier post
         public function ajoutSujet($id){
 
+            // On instancie les managers
             $topicManager = new TopicManager();
             $postManager = new PostManager();
             
+            // On récupère les données du formulaire et on les filtre pour éviter les injections
             $titre = filter_input(INPUT_POST, 'titre', FILTER_SANITIZE_SPECIAL_CHARS);
             $text = filter_input(INPUT_POST, 'text', FILTER_SANITIZE_SPECIAL_CHARS);
             
+            // On ajoute le sujet et on récupère l'id du sujet
             $newTopicId = $topicManager->add([
                 "titre" => $titre,
                 "user_id" => 10,
                 "categorie_id" => $id]);
 
+            // On ajoute le premier post dans le sujet avec l'id du sujet récupéré
             $postManager->add([
                 "texte" => $text,
                 "user_id" => 10,
                 "topic_id" => $newTopicId]);
             
+            // On redirige vers la page du sujet créé via l'id du sujet
             $this->redirectTo("forum", "listPostsByTopic", $newTopicId);
         }
 

@@ -31,4 +31,20 @@
 
         }
 
+        // Méthode pour récupérer l'id du premier post d'un topic
+        public function findFirstPostByTopic($id) {
+
+            $sql = "SELECT p.id_post
+                    FROM ".$this->tableName." p 
+                    WHERE p.topic_id = :id
+                    AND p.datePost = 
+                    (SELECT MIN(datePost) FROM post WHERE topic_id = :id)";
+                    
+            return $this->getOneOrNullResult(
+                DAO::select($sql, ['id' => $id], false),
+                $this->className
+            );
+
+        }
+
     }
