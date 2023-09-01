@@ -31,6 +31,6 @@ $topic = $result["data"]['topic'];
         <form action="index.php?ctrl=forum&action=addPost&id=<?= $topic->getId() ?>" method="post" enctype="multipart/form-date">
             <label>Répondre</label>
             <textarea placeholder="Apporter une réponse au sujet.." name="text"></textarea>
-            <input type="submit" name="submit" value="POSTER">
+            <input class="submit" type="submit" name="submit" value="POSTER">
         </form>
 </div>

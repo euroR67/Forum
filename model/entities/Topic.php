@@ -27,9 +27,15 @@
 
         // Set the value of lastPostDate
         public function setLastPostDate($lastPostDate) {
-                $this->lastPostDate = new \DateTime($lastPostDate);
+                if ($lastPostDate !== null) {
+                    $this->lastPostDate = new \DateTime($lastPostDate);
+                } else {
+                    // Gérer le cas où $lastPostDate est null, par exemple en utilisant la date actuelle
+                    $this->lastPostDate = new \DateTime();
+                }
                 return $this;
         }
+            
 
         // Get the value of nbPosts
         public function getNbPosts() {

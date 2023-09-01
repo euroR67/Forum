@@ -15,15 +15,44 @@ table {
     border-collapse: collapse;
     border: none;
 }
+
+/* Un TD sur 2 aura une couleur de fond différent */
+table tr:nth-child(2n) {
+    background-color: rgb(234, 242, 248);
+}
+
 td {
-    background-color: rgb(215, 244, 253);
     padding: 10px;
     text-align: start;
-  }
+}
   
 th {
     text-align: start;
     padding: 10px;
+}
+
+.topics-container th:nth-child(1) {
+    width: auto; /* Laisser la largeur de la première colonne automatique */
+}
+
+.topics-container th:nth-child(2),
+.topics-container th:nth-child(3),
+.topics-container th:nth-child(4) {
+    width: 1%; /* Largeur minimale pour les autres colonnes */
+}
+
+.topics-container td:nth-child(1) {
+    width: auto; /* Laisser la largeur de la première colonne automatique */
+}
+
+.topics-container td:nth-child(2),
+.topics-container td:nth-child(3),
+.topics-container td:nth-child(4) {
+    width: 1%; /* Largeur minimale pour les autres colonnes */
+}
+
+.topics-container td:nth-child(3) {
+    text-align: center;
 }
 /* ================== Début vue topic ================== */
 
@@ -41,6 +70,17 @@ th {
     width: 90%;
     margin: auto;
     margin-block: 50px;
+}
+
+.topics-container {
+    width: 100%;
+    margin: auto;
+    margin-block: 30px;
+}
+
+table {
+    width: 80%;
+    margin: auto;
 }
 
 .post-block {
@@ -112,12 +152,21 @@ form textarea {
     border-radius: 5px;
 }
 
-form textarea:focus {
+form .champ-titre {
+    margin-block: 10px;
+    padding: 10px;
+    outline: none;
+    font-size: 18px;
+    border: 1px solid rgb(185, 185, 185);
+    border-radius: 5px;
+}
+
+form textarea:focus , form .champ-titre:focus {
     border: 1px solid rgb(145, 144, 144);
     box-shadow: 0 0 5px rgb(145, 144, 144);
 }
 
-form input {
+form .submit {
     width: fit-content;
     margin-block: 10px;
     padding: 10px 40px;
@@ -128,7 +177,7 @@ form input {
     font-weight: 600;
 }
 
-form input:hover {
+form .submit:hover {
     background-color: rgb(176, 216, 253);
 }
 
@@ -139,21 +188,23 @@ form label {
 }
 
 /* Boutton nouveau sujet */
+.btn-add {
+    width: 80%;
+    margin: auto;
+    margin-block: 20px;
+}
+
+.nv_sujet:hover {
+    background-color: rgb(176, 216, 253);
+}
+
 .nv_sujet {
-    width: fit-content;
+    color: rgb(36, 36, 36);
     padding: 10px;
     background-color: rgb(189, 222, 252);
     border-radius: 5px;
     border: none;
     cursor: pointer;
     font-weight: 600;
-    margin-block: 10Px;
-}
-
-.nv_sujet a {
-    color: rgb(36, 36, 36);
-}
-
-.nv_sujet:hover {
-    background-color: rgb(176, 216, 253);
+    width: fit-content;
 }
