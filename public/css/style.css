@@ -9,6 +9,46 @@ a {
     text-decoration: none;
 }
 
+.categorie-list {
+    width: 80%;
+    margin: auto;
+    margin-block: 30px;
+}
+
+.categorie-list li {
+    list-style: none;
+    margin-block: 10px;
+    background-color: aliceblue;
+    padding: 15px;
+    border: 1px solid rgb(219, 218, 218);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.categorie-list li a {
+    color: rgb(43, 42, 42);
+    font-weight: 600;
+}
+
+.categorie-list li:hover {
+    background-color: rgb(234, 242, 248);
+    box-shadow: 0 0 5px rgb(219, 218, 218);
+}
+
+/* Bouton update catégorie */
+.update-categorie {
+    color: rgb(0, 0, 0);
+    font-weight: 600;
+    padding: 5px 10px;
+    border-radius: 5px;
+    background-color: rgb(189, 222, 252);
+}
+
+.update-cat-input {
+    display: none;
+}
+
 
 table {
     min-width: 60%;
@@ -198,7 +238,7 @@ form textarea {
     border-radius: 5px;
 }
 
-form .champ-titre {
+form .champ-titre, .add-cat-form input {
     margin-block: 10px;
     padding: 10px;
     outline: none;

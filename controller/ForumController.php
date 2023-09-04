@@ -15,9 +15,10 @@
         public function index(){
           
 
-            // On récupère les topics et on les envoie à la vue
+            // On instancie le manager
            $topicManager = new TopicManager();
 
+           // On récupère les topics et on les envoie à la vue
             return [
                 "view" => VIEW_DIR."forum/listTopics.php",
                 "data" => [
@@ -30,8 +31,10 @@
         // Méthode pour récupérer les catégories et les envoyer à la vue
         public function listCategories(){
 
+            // On instancie le manager
             $categorieManager = new CategorieManager();
 
+            // On récupère les catégories et on les envoie à la vue
             return [
                 "view" => VIEW_DIR."forum/listCategories.php",
                 "data" => [
@@ -44,9 +47,11 @@
         // Méthode pour récupérer les topics d'une catégorie et les envoyer à la vue
         public function listTopicsByCategorie($id) {
 
+            // On instancie les managers
             $topicManager = new TopicManager();
             $categorieManager = new CategorieManager();
 
+            // On récupère les topics et la catégorie et on les envoie à la vue
             return [
                 "view" => VIEW_DIR."forum/TopicsByCategorie.php",
                 "data" => [
@@ -60,9 +65,11 @@
         // Méthode pour récupérer les posts d'un topic et les envoyer à la vue du topic
         public function listPostsByTopic($id) {
 
+            // On instancie les managers
             $postManager = new PostManager();
             $topicManager = new TopicManager();
 
+            // On récupère les posts et le topic et on les envoie à la vue
             return [
                 "view" => VIEW_DIR."forum/PostsByTopics.php",
                 "data" => [
@@ -77,17 +84,19 @@
 
         // Méthode pour ajouter un post
         public function addPost($id){
-          
+
+            // On instancie le manager
             $postManager = new PostManager();
             $text = filter_input(INPUT_POST, 'text', FILTER_SANITIZE_SPECIAL_CHARS);
            
-           
+           // On récupère les données du formulaire
             $data = [
                 'texte'=> $text ,
                 'user_id'=> 10,
                 'topic_id'=> $id
             ];
 
+            // On ajoute le post
             $postManager->add($data);
 
             // On redirige vers la page du topic
@@ -163,6 +172,55 @@
             
             // On redirige vers la page du sujet créé via l'id du sujet
             $this->redirectTo("forum", "listPostsByTopic", $newTopicId);
+        }
+
+        // Méthode pour modifier le nom d'une catégorie
+        public function updateCategorie($id){
+            // var_dump($_POST); die;
+            // On instancie les managers
+            $categorieManager = new CategorieManager();
+
+            // On récupère le nouveau nom de la catégorie
+            $nomCategorie = filter_input(INPUT_POST, 'nomCategorie', FILTER_SANITIZE_SPECIAL_CHARS);
+
+            // On modifie le nom de la catégorie
+            $categorieManager->updateCategorie($id,$nomCategorie);
+
+            // On redirige vers la liste des catégories
+            $this->redirectTo("forum", "listCategories");
+
+        }
+
+        // Méthode pour ajouter une catégorie 
+        public function addCategorie(){
+
+            // On instancie les managers
+            $categorieManager = new CategorieManager();
+
+            // On récupère le nom de la catégorie
+            $nomCategorie = filter_input(INPUT_POST, 'nomCategorie', FILTER_SANITIZE_SPECIAL_CHARS);
+
+            // On ajoute la catégorie
+            $categorieManager->add([
+                "nomCategorie" => $nomCategorie]);
+
+            // On redirige vers la liste des catégories
+            $this->redirectTo("forum", "listCategories");
+
+        }
+
+        // Méthode pour supprimer une catégorie
+        public function deleteCategorie($id){
+
+            // On instancie les managers
+            $categorieManager = new CategorieManager();
+
+            // On supprime la catégorie
+            $categorieManager->delete($id);
+
+            // On redirige vers la liste des catégories
+            $this->redirectTo("forum", "listCategories");
+
         }
 
         // Méthode pour modifier le titre d'un sujet

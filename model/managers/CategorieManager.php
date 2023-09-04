@@ -15,5 +15,15 @@
             parent::connect();
         }
 
+        // Fonction pour modifier le nom d'une catégorie
+        public function updateCategorie($id, $nomCategorie) {
+
+            $sql = "UPDATE ".$this->tableName." c
+                    SET nomCategorie = :nomCategorie
+                    WHERE c.id_categorie = :id";
+
+            return DAO::update($sql, [":id" => $id, ":nomCategorie" => $nomCategorie]);
+        }
+
 
     }
