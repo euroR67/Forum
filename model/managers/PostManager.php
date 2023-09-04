@@ -47,4 +47,15 @@
 
         }
 
+        // Méthode pour modifier un post depuis son id
+        public function updatePost($id, $texte) {
+
+            $sql = "UPDATE ".$this->tableName." p
+                    SET texte = :texte 
+                    WHERE p.id_post = :id";
+
+            return DAO::update($sql, ['id' => $id, 'texte' => $texte]);
+
+        }
+
     }

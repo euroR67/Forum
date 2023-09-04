@@ -40,7 +40,7 @@
                     SET titre = :titre
                     WHERE t.id_topic = :id";
 
-            return DAO::update($sql, [":id" => $id, ":titre" => $titre]);
+            return DAO::update($sql, ["id" => $id, "titre" => $titre]);
         }
 
     }

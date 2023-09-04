@@ -243,6 +243,27 @@
             $this->redirectTo("forum", "listPostsByTopic", $id);
 
         }
+
+        // Méthode pour modifier un post
+        public function editPost($id){
+
+            // On instancie les managers
+            $postManager = new PostManager();
+
+            // On récupère l'id du topic du post
+            $post = $postManager->findOneById($id);
+            $idPost = $post->getTopic()->getId();
+
+            // On récupère le nouveau texte du post
+            $texte = filter_input(INPUT_POST, 'texte', FILTER_SANITIZE_SPECIAL_CHARS);
+
+            // On modifie le texte du post
+            $postManager->updatePost($id, $texte);
+            // On redirige vers la page du sujet modifié via l'id du sujet
+            $this->redirectTo("forum", "listPostsByTopic", $idPost);
+            
+
+        }
         
 
     }

@@ -179,7 +179,7 @@ table {
 }
 
 /* Boutton suppression post */
-.post-block > a {
+.post-block .btn-delete {
     color: #fff;
     font-size: 12px;
     font-weight: 600;
@@ -188,6 +188,17 @@ table {
     padding: 5px;
     border-radius: 5px;
 }
+
+.post-block #edit-link {
+    color: black;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    background-color: rgb(189, 222, 252);
+    padding: 5px;
+    border-radius: 5px;
+}
+
 
 /* Un block poster sur 2 a une couleur de fond différent */
 .post-block:nth-child(2n) {
@@ -218,6 +229,10 @@ table {
 
 #edit-form {
     display: none ;
+}
+
+.edit-post {
+    display: none;
 }
 
 form {

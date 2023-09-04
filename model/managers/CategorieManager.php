@@ -22,7 +22,7 @@
                     SET nomCategorie = :nomCategorie
                     WHERE c.id_categorie = :id";
 
-            return DAO::update($sql, [":id" => $id, ":nomCategorie" => $nomCategorie]);
+            return DAO::update($sql, ["id" => $id, "nomCategorie" => $nomCategorie]);
         }
 
         // Fonction pour supprimer une catégorie 
@@ -31,7 +31,7 @@
             $sql = "DELETE FROM ".$this->tableName." c
                     WHERE c.id_categorie = :id";
 
-            return DAO::delete($sql, [":id" => $id]);
+            return DAO::delete($sql, ["id" => $id]);
         }
 
 
