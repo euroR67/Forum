@@ -228,7 +228,7 @@
         }
 
         // Méthode pour modifier le titre d'un sujet
-        public function modifierSujet(){
+        public function editTopicTitle($id){
 
             // On instancie les managers
             $topicManager = new TopicManager();

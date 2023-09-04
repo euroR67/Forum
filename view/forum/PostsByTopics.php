@@ -16,7 +16,7 @@ $topic = $result["data"]['topic'];
             <h2 id="topic-title">Sujet : <?= $topic->getTitre() ?></h2>
 
             <!-- On fait apparaitre l'input qui permet de modifier le titre du sujet avec form -->
-            <form id="edit-form" action="index.php?ctrl=forum&action=modifierSujet&id=<?= $topic->getId() ?>" method="post">
+            <form id="edit-form" action="index.php?ctrl=forum&action=editTopicTitle&id=<?= $topic->getId() ?>" method="post">
                 <input type="text" name="titre" id="new-title" value="<?= $topic->getTitre() ?>">
                 <input type="submit" value="Modifier">
                 <!-- Bouton pour annuler la modification en faisant display none sur le form et display block sur topic-title -->
@@ -69,29 +69,29 @@ $topic = $result["data"]['topic'];
 
 <script>
 
-// On récupère l'id du bouton pour modifier le titre du sujet
-const editLink = document.getElementById("edit-link");
-// On récupère l'id du titre du sujet
-const topicTitle = document.getElementById("topic-title");
-// On récupère l'id du form pour modifier le titre du sujet
-const editForm = document.getElementById("edit-form");
-// On récupère l'id du nouvel input pour modifier le titre du sujet
-const newTitle = document.getElementById("new-title");
-// On récupère l'id du bouton pour annuler la modification du titre du sujet
-const cancelUpdate = document.querySelector(".cancel-update");
+    // On récupère l'id du bouton pour modifier le titre du sujet
+    const editLink = document.getElementById("edit-link");
+    // On récupère l'id du titre du sujet
+    const topicTitle = document.getElementById("topic-title");
+    // On récupère l'id du form pour modifier le titre du sujet
+    const editForm = document.getElementById("edit-form");
+    // On récupère l'id du nouvel input pour modifier le titre du sujet
+    const newTitle = document.getElementById("new-title");
+    // On récupère l'id du bouton pour annuler la modification du titre du sujet
+    const cancelUpdate = document.querySelector(".cancel-update");
 
-// On fait apparaitre l'input qui permet de modifier le titre du sujet
-editLink.addEventListener("click", function(e) {
-    e.preventDefault();
-    topicTitle.style.display = "none";
-    editForm.style.display = "block";
-});
+    // On fait apparaitre l'input qui permet de modifier le titre du sujet
+    editLink.addEventListener("click", function(e) {
+        e.preventDefault();
+        topicTitle.style.display = "none";
+        editForm.style.display = "block";
+    });
 
-// On fait disparaitre l'input qui permet de modifier le titre du sujet
-cancelUpdate.addEventListener("click", function(e) {
-    e.preventDefault();
-    topicTitle.style.display = "block";
-    editForm.style.display = "none";
-});
+    // On fait disparaitre l'input qui permet de modifier le titre du sujet
+    cancelUpdate.addEventListener("click", function(e) {
+        e.preventDefault();
+        topicTitle.style.display = "block";
+        editForm.style.display = "none";
+    });
 
 </script>
