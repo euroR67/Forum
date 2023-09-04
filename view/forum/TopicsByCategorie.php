@@ -7,15 +7,15 @@ $categories = $result["data"]['categories'];
 
 <h1> <a href="index.php?ctrl=forum&action=listCategories">Catégories</a> > <?=$categories->getNomCategorie()?></h1>
 
-<?php
 
+<div class="topics-container">
+    <div class="btn-add">
+        <a class="nv_sujet" href="#">Nouveau Sujet</a>
+    </div>
+<?php
 if (empty($topics)) : ?>
     <p>Aucun sujet n'a été trouvé dans cette catégorie.</p>
 <?php else : ?>
-    <div class="topics-container">
-        <div class="btn-add">
-            <a class="nv_sujet" href="#">Nouveau Sujet</a>
-        </div>
         <table border=1>
             <tr>
                 <th>Sujet</th>
@@ -59,10 +59,11 @@ if (empty($topics)) : ?>
             <?php endforeach; ?>
         </table>
     </div>
+    <?php endif; ?>
     <!-- Formulaire pour ajouter un nouveau sujet et le premier post -->
     <form action="index.php?ctrl=forum&action=ajoutSujet&id=<?= $categories->getId() ?>" method="post" enctype="multipart/form-date">
         <label>Nouveau sujet</label>
         <input class="champ-titre" type="text" name="titre" placeholder="Titre du sujet">
         <textarea placeholder="Apporter une réponse au sujet.." name="text"></textarea>
         <input class="submit" type="submit" name="submit" value="POSTER">
-<?php endif; ?>
+    </form>

@@ -20,10 +20,12 @@ foreach($categories as $categorie) {
             <a class="cancel-update" href="/">Annuler</a>
         </form>
 
-        <!-- Bouton pour modifier le titre du catégorie -->
-        <a class="update-categorie" href="index.php?ctrl=forum&action=updateCategorie&id=<?=$categorie->getId()?>">Modifier</a>
-        <!-- Bouton pour supprimer la catégorie -->
-        <a class="delete-categorie" href="index.php?ctrl=forum&action=deleteCategorie&id=<?=$categorie->getId()?>">Supprimer</a>
+        <div class="update-delete">
+            <!-- Bouton pour modifier le titre du catégorie -->
+            <a class="update-categorie" href="index.php?ctrl=forum&action=updateCategorie&id=<?=$categorie->getId()?>">Modifier</a>
+            <!-- Bouton pour supprimer la catégorie -->
+            <a class="delete-categorie" href="index.php?ctrl=forum&action=deleteCategorie&id=<?=$categorie->getId()?>">Supprimer</a>
+        </div>
     </li>
     <?php } ?>
     <!-- Formulaire pour ajouter une nouvelle catégorie -->

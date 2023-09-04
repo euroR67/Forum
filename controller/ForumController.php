@@ -209,14 +209,18 @@
 
         }
 
-        // Méthode pour supprimer une catégorie
+        // Méthode pour supprimer une catégorie et tous les topics et posts associés
         public function deleteCategorie($id){
 
             // On instancie les managers
             $categorieManager = new CategorieManager();
 
-            // On supprime la catégorie
-            $categorieManager->delete($id);
+            // On récupère l'id de la catégorie
+            $categorie = $categorieManager->findOneById($id);
+            $idCategorie = $categorie->getId();
+
+            // On supprime la catégorie et tous les topics et posts associés
+            $categorieManager->delete($idCategorie);
 
             // On redirige vers la liste des catégories
             $this->redirectTo("forum", "listCategories");
@@ -233,13 +237,12 @@
             $titre = filter_input(INPUT_POST, 'titre', FILTER_SANITIZE_SPECIAL_CHARS);
 
             // On modifie le titre du sujet
-            $topicManager->update([
-                "id_topic" => $id,
-                "titre" => $titre]);
+            $topicManager->updateTopic($id, $titre);
 
             // On redirige vers la page du sujet modifié via l'id du sujet
             $this->redirectTo("forum", "listPostsByTopic", $id);
 
         }
+        
 
     }

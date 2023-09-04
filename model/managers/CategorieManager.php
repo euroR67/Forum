@@ -25,5 +25,14 @@
             return DAO::update($sql, [":id" => $id, ":nomCategorie" => $nomCategorie]);
         }
 
+        // Fonction pour supprimer une catégorie 
+        public function deleteCategorie($id) {
+
+            $sql = "DELETE FROM ".$this->tableName." c
+                    WHERE c.id_categorie = :id";
+
+            return DAO::delete($sql, [":id" => $id]);
+        }
+
 
     }

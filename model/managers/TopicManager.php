@@ -33,4 +33,14 @@
 
         }
 
+        // méthode pour modifier le titre d'un topic
+        public function updateTopic($id, $titre) {
+
+            $sql = "UPDATE ".$this->tableName." t
+                    SET titre = :titre
+                    WHERE t.id_topic = :id";
+
+            return DAO::update($sql, [":id" => $id, ":titre" => $titre]);
+        }
+
     }
