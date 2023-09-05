@@ -54,33 +54,49 @@ document.addEventListener("DOMContentLoaded", function() {
     }
     updateTitle();
 
-    // On utilise JavaScript pour permettre à l'utilisateur de modifier le post
     function updatePost() {
-        // on récupère l'id du bouton pour modifier le post
-        const btnEditPost = document.querySelector(".btn-edit-post");
-        // on récupère l'id du form pour modifier le post
-        const editPost = document.querySelector(".edit-post");
-        // on récupère l'id du post
-        const postText = document.querySelector(".message-post");
-        // on récupère l'id du bouton pour annuler la modification du post
-        const cancelUpdatePost = document.querySelector(".cancel-update-post");
-
-        // On fait apparaitre l'input qui permet de modifier le post , on fait disparaitre le post et le bouton modifier
-        btnEditPost.addEventListener("click", function(e) {
-            e.preventDefault();
-            postText.style.display = "none";
-            btnEditPost.style.display = "none";
-            editPost.style.display = "block";
-        });
-
-        // On fait disparaitre l'input qui permet de modifier le post , on fait apparaitre le post et le bouton modifier
-        cancelUpdatePost.addEventListener("click", function(e) {
-            e.preventDefault();
-            postText.style.display = "block";
-            btnEditPost.style.display = "block";
-            editPost.style.display = "none";
-        });
+        // Sélectionnez tous les boutons "Modifier le post"
+        const btnEditPosts = document.querySelectorAll(".btn-edit-post");
+        const cancelUpdatePosts = document.querySelectorAll(".cancel-update-post");
+    
+        for (let i = 0; i < btnEditPosts.length; i++) {
+            btnEditPosts[i].addEventListener("click", function (e) {
+                e.preventDefault();
+    
+                // Trouvez le post correspondant à ce bouton
+                const postBlock = btnEditPosts[i].closest(".post-block");
+                const postText = postBlock.querySelector(".message-post");
+                const editPostForm = postBlock.querySelector(".edit-post");
+    
+                // Sélectionnez également le bouton "Modifier" pour le masquer
+                const btnEdit = postBlock.querySelector(".btn-edit-post");
+    
+                // Masquez le bouton "Modifier", le texte du post et affichez le formulaire d'édition
+                btnEdit.style.display = "none";
+                postText.style.display = "none";
+                editPostForm.style.display = "block";
+            });
+    
+            cancelUpdatePosts[i].addEventListener("click", function (e) {
+                e.preventDefault();
+    
+                // Trouvez le post correspondant à ce bouton
+                const postBlock = cancelUpdatePosts[i].closest(".post-block");
+                const postText = postBlock.querySelector(".message-post");
+                const editPostForm = postBlock.querySelector(".edit-post");
+    
+                // Sélectionnez également le bouton "Modifier" pour le réafficher
+                const btnEdit = postBlock.querySelector(".btn-edit-post");
+    
+                // Réaffichez le bouton "Modifier", le texte du post et masquez le formulaire d'édition
+                btnEdit.style.display = "unset";
+                postText.style.display = "block";
+                editPostForm.style.display = "none";
+            });
+        }
     }
+    
     updatePost();
+    
 
 });

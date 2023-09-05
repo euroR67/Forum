@@ -29,6 +29,7 @@ $topic = $result["data"]['topic'];
 
         <div>
             <a href="#">Répondre</a>
+            <a href="#">Vérrouiller</a>
             <a href="index.php?ctrl=forum&action=deleteTopic&id=<?= $topic->getId() ?>">Suppr. Topic</a>
         </div>
 
@@ -58,7 +59,7 @@ $topic = $result["data"]['topic'];
 
         <!-- Formulaire modifier le post avec action vers la méthode editPost du controller -->
         <form class="edit-post" action="index.php?ctrl=forum&action=editPost&id=<?= $post->getId() ?>" method="post" enctype="multipart/form-date">
-            <textarea class="post" type="text" name="texte" id="post<?= $post->getId() ?>"><?= $post->getTexte() ?></textarea>
+            <textarea class="post" type="text" name="texte"><?= $post->getTexte() ?></textarea>
             <input class="submit" type="submit" value="MODIFIER">
             <!-- Bouton pour annuler la modification en faisant display none sur le form et display block sur le post-text -->
             <a class="cancel-update-post" href="/">Annuler</a>
@@ -72,7 +73,7 @@ $topic = $result["data"]['topic'];
     <?php } ?>
     <form  action="index.php?ctrl=forum&action=addPost&id=<?= $topic->getId() ?>" method="post" enctype="multipart/form-date">
         <label>Répondre</label>
-        <textarea placeholder="Apporter une réponse au sujet.." name="text"></textarea>
+        <textarea class="post" placeholder="Apporter une réponse au sujet.." name="text"></textarea>
         <input class="submit" type="submit" name="submit" value="POSTER">
     </form>
 </div>
