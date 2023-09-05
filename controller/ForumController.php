@@ -87,7 +87,7 @@
 
             // On instancie le manager
             $postManager = new PostManager();
-            $text = filter_input(INPUT_POST, 'text', FILTER_SANITIZE_SPECIAL_CHARS);
+            $text = filter_input(INPUT_POST, 'text', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
            
            // On récupère les données du formulaire
             $data = [
@@ -155,8 +155,8 @@
             $postManager = new PostManager();
             
             // On récupère les données du formulaire et on les filtre pour éviter les injections
-            $titre = filter_input(INPUT_POST, 'titre', FILTER_SANITIZE_SPECIAL_CHARS);
-            $text = filter_input(INPUT_POST, 'text', FILTER_SANITIZE_SPECIAL_CHARS);
+            $titre = filter_input(INPUT_POST, 'titre', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $text = filter_input(INPUT_POST, 'text', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             
             // On ajoute le sujet et on récupère l'id du sujet
             $newTopicId = $topicManager->add([
@@ -181,7 +181,7 @@
             $categorieManager = new CategorieManager();
 
             // On récupère le nouveau nom de la catégorie
-            $nomCategorie = filter_input(INPUT_POST, 'nomCategorie', FILTER_SANITIZE_SPECIAL_CHARS);
+            $nomCategorie = filter_input(INPUT_POST, 'nomCategorie', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
             // On modifie le nom de la catégorie
             $categorieManager->updateCategorie($id,$nomCategorie);
@@ -198,7 +198,7 @@
             $categorieManager = new CategorieManager();
 
             // On récupère le nom de la catégorie
-            $nomCategorie = filter_input(INPUT_POST, 'nomCategorie', FILTER_SANITIZE_SPECIAL_CHARS);
+            $nomCategorie = filter_input(INPUT_POST, 'nomCategorie', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
             // On ajoute la catégorie
             $categorieManager->add([
@@ -234,7 +234,7 @@
             $topicManager = new TopicManager();
 
             // On récupère le nouveau titre du sujet
-            $titre = filter_input(INPUT_POST, 'titre', FILTER_SANITIZE_SPECIAL_CHARS);
+            $titre = filter_input(INPUT_POST, 'titre', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
             // On modifie le titre du sujet
             $topicManager->updateTopic($id, $titre);
@@ -255,7 +255,7 @@
             $idPost = $post->getTopic()->getId();
 
             // On récupère le nouveau texte du post
-            $texte = filter_input(INPUT_POST, 'texte', FILTER_SANITIZE_SPECIAL_CHARS);
+            $texte = filter_input(INPUT_POST, 'texte', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
             // On modifie le texte du post
             $postManager->updatePost($id, $texte);
