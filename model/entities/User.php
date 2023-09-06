@@ -7,7 +7,7 @@
 
         private $id;
         private $pseudo;
-        private $mdp;
+        private $password;
         private $email;
         private $dateInscription;
         private $role;
@@ -38,14 +38,14 @@
                 return $this;
         }
 
-        // Get the value of mdp
-        public function getMdp() {
-                return $this->mdp;
+        // Get the value of password
+        public function getPassword() {
+                return $this->password;
         }
 
-        // Set the value of mdp
-        public function setMdp($mdp) {
-                $this->mdp = $mdp;
+        // Set the value of password
+        public function setPassword($password) {
+                $this->password = $password;
                 return $this;
         }
 

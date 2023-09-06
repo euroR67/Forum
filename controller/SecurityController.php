@@ -79,10 +79,37 @@
             $userManager = new UserManager();
 
             if(isset($_POST["submit"])) {
-                
+
                 // On filtre les champs de saisis
                 $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-                $password1 = filter_input(INPUT_POST, 'password1', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+                $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+                // On vérifie que le filtrage c'est bien passée
+                if($email && $password) {
+                    // On récupère l'utilisateur en fonction de son email
+                    $user = $userManager->findOneByEmail($email);
+                    // On récupère le mot de passe associée a l'email
+                    // $hash = $user["password"];
+                    // On vérifie que l'utilisateur existe bien
+                    if($user) {
+                        // On compare le mot de passe
+                        if(password_verify($password, $user->getPassword())) {
+                            // On ouvre la session de l'utilisateur
+                            Session::setUser($user);
+                            // On redirige vers la liste des catégories
+                            $this->redirectTo("forum", "listCategories");
+                        } else {
+                            // Message ou action si le mot de passe est incorrect
+                            Session::addFlash("error", "Email ou mot de passe incorrect");
+                        }
+                    } else {
+                    // Message si le comtpe n'existe pas
+                    Session::addFlash("error", "Aucun compte existant avec cet email");
+                    }
+                } else {
+                    // Message ou action au cas ou le filtrage n'est pas passé
+                    Session::addFlash("error", "Vérifier vos saisis...");
+                }
             }
 
             // On redirige vers la page de login

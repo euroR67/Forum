@@ -12,6 +12,6 @@
         <input type="password" name="password" id="password" required>
     </div>
     <div>
-        <input type="submit" value="Se connecter">
+        <input type="submit" name="submit" id="submit" value="Se connecter">
     </div>
 </form>
