@@ -20,8 +20,8 @@
 
             $sql = "
                 SELECT *
-                FROM ".$this->tableName." a
-                WHERE a.email = :email
+                FROM ".$this->tableName." u
+                WHERE u.email = :email
                 ";
 
             return $this->getOneOrNullResult(
@@ -29,6 +29,21 @@
                 $this->className
             );
 
+        }
+
+        // Méthode pour trouver un utilisateur par le pseudo
+        public function findOneByPseudo($pseudo){
+
+            $sql = "
+                SELECT *
+                FROM ".$this->tableName." u
+                WHERE u.pseudo = :pseudo
+                ";
+
+            return $this->getOneOrNullResult(
+                DAO::select($sql, ["pseudo" => $pseudo], false),
+                $this->className
+            );
         }
 
     }
