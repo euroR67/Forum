@@ -83,6 +83,15 @@
                 return $this;
         }
 
+        // Fonction qui pour vérifier le role d'un utilisateur
+        public function hasRole($role) {
+                if( $this->role == $role){
+                        return true;
+                } else {
+                        return false;
+                };
+        }
+
         public function __toString(){
             return $this->pseudo;
         }

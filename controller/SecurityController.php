@@ -5,6 +5,7 @@
     use App\Session;
     use App\AbstractController;
     use App\ControllerInterface;
+    use Model\Managers\PostManager;
     use Model\Managers\UserManager;
     
     class SecurityController extends AbstractController implements ControllerInterface {
@@ -88,8 +89,6 @@
                 if($email && $password) {
                     // On récupère l'utilisateur en fonction de son email
                     $user = $userManager->findOneByEmail($email);
-                    // On récupère le mot de passe associée a l'email
-                    // $hash = $user["password"];
                     // On vérifie que l'utilisateur existe bien
                     if($user) {
                         // On compare le mot de passe
@@ -116,6 +115,37 @@
             return [
                 "view" => VIEW_DIR."security/login.php"
             ];
+
+        }
+
+        // Fonction pour ce déconnecter de la session
+        public function logOut() {
+
+            // On retire la session utilisateur (user)
+            unset($_SESSION["user"]);
+            // On redirige vers la liste des catégorie (home) une fois déconnecter
+            $this->redirectTo("forum", "listCategories");
+
+        }
+
+        // Fonction pour récupérer les information d'un utilisateur et envoyer a la vue profile.php
+        public function profile() {
+
+            // On instancie les managers
+            $userManager = new UserManager();
+            $postManager = new PostManager();
+            // On récupère l'id de l'utilisateur en session
+            $idUser = $_SESSION["user"]->getId();
+            // On récupère l'utilisateur et l'envoie à la vue
+            return [
+                "view" => VIEW_DIR."security/profile.php",
+                "data" => [
+                    "posts" => $postManager->findPostsByUser($idUser),
+        
+                    "user" => $userManager->findOneById($idUser)
+                ]
+            ];
+            
 
         }
 

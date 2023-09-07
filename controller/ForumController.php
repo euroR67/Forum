@@ -75,7 +75,7 @@
                 "data" => [
                     // On appelle la méthode findPostsByTopic() du PostManager pour récupérer les posts d'un topic
                     "posts" => $postManager->findPostsByTopic($id, ["datePost", "ASC"]),
-                    // On appelle la méthode findOneById() du TopicManager pour récupérer les posts d'un topic
+                    // On appelle la méthode findOneById() du TopicManager pour récupérer le topic
                     "topic" => $topicManager->findOneById($id)
                 ]
             ];
@@ -92,7 +92,7 @@
            // On récupère les données du formulaire
             $data = [
                 'texte'=> $text ,
-                'user_id'=> 10,
+                'user_id'=> 11,
                 'topic_id'=> $id
             ];
 

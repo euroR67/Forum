@@ -31,6 +31,22 @@
 
         }
 
+        // méthode pour afficher tout les topics appartenant à une catégorie depuis l'id de la catégorie
+        public function findPostsByUser($id) {
+
+            $sql = "SELECT *
+                    FROM ".$this->tableName." p 
+                    WHERE p.user_id = :id 
+                    ORDER BY p.datePost DESC";
+                    
+
+            return $this->getMultipleResults(
+                DAO::select($sql, ['id' => $id]),
+                $this->className
+            );
+
+        }
+
         // Méthode pour récupérer l'id du premier post d'un topic
         public function findFirstPostByTopic($id) {
 
