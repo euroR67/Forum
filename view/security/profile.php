@@ -8,7 +8,13 @@
 <p>Pseudo : <?= $users->getPseudo() ?></p>
 <p>Date d'inscription : <?= $users->getDateInscription() ?></p>
 <p>Pseudo : <?= $users->getRole() ?></p>
-<p>Pseudo : <?= $users->getEmail() ?></p>
+
+<!-- On affiche l'email uniquement si c'est l'email de l'utilisateur connecté (en session) -->
+<?php if($users->getId() == $_SESSION['user']->getId()) { ?>
+
+    <p>Email : <?= $users->getEmail() ?></p>
+
+<?php } ?>
 
 <h2>Dernier posts</h2>
 

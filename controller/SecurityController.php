@@ -129,22 +129,35 @@
         }
 
         // Fonction pour récupérer les information d'un utilisateur et envoyer a la vue profile.php
-        public function profile() {
+        public function profile($id = NULL) {
 
             // On instancie les managers
             $userManager = new UserManager();
             $postManager = new PostManager();
-            // On récupère l'id de l'utilisateur en session
-            $idUser = $_SESSION["user"]->getId();
-            // On récupère l'utilisateur et l'envoie à la vue
-            return [
-                "view" => VIEW_DIR."security/profile.php",
-                "data" => [
-                    "posts" => $postManager->findPostsByUser($idUser),
-        
-                    "user" => $userManager->findOneById($idUser)
-                ]
-            ];
+
+            // On vérifie qu'il s'agit bien du profil de la personne connecter
+            // Si oui on affiche le profile de l'utilisateur connecter
+            if($id == NULL) {
+                // On récupère l'id de l'utilisateur en session
+                $idUser = $_SESSION["user"]->getId();
+                // On récupère l'utilisateur et l'envoie à la vue
+                return [
+                    "view" => VIEW_DIR."security/profile.php",
+                    "data" => [
+                        "posts" => $postManager->findPostsByUser($idUser),
+                        "user" => $userManager->findOneById($idUser)
+                    ]
+                ];
+            // Sinon on affiche le profile des utilisateurs par leur ID
+            } else {
+                return [
+                    "view" => VIEW_DIR."security/profile.php",
+                    "data" => [
+                        "posts" => $postManager->findPostsByUser($id),
+                        "user" => $userManager->findOneById($id)
+                    ]
+                ];
+            }
             
 
         }

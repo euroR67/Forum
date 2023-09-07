@@ -43,4 +43,15 @@
             return DAO::update($sql, ["id" => $id, "titre" => $titre]);
         }
 
+        // Méthode pour verrouiller un topic
+        public function lockTopic() {
+
+            $sql = "UPDATE ".$this->tableName." t
+                    SET titre = :titre
+                    WHERE t.id_topic = :id";
+
+            return DAO::update($sql, ["id" => $id, "titre" => $titre]);
+
+        }
+
     }

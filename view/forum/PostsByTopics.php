@@ -47,7 +47,7 @@ $topic = $result["data"]['topic'];
                 <img src="https://picsum.photos/50/50" alt="">
             </figure>
             <div class="user-date">
-                <a href="#">
+                <a href="index.php?ctrl=security&action=profile&id=<?= $post->getUser()->getId() ?>">
                     <?= $post->getUser() ?>
                 </a>
                 <p>Le <?= $post->getDatePost() ?></p>
