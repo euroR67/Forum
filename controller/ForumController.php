@@ -264,6 +264,34 @@
             
 
         }
+
+        // Fonction pour vérrouiller un topic
+        public function lockTopic($id){
+
+            // On instancie le manager
+            $topicManager = new TopicManager();
+
+            // On modifie le status verrouiller en TRUE
+            $topicManager->lockTopic($id);
+
+            // On redirige vers la page du sujet modifié via l'id du sujet
+            $this->redirectTo("forum", "listPostsByTopic", $id);
+
+        }
+
+        // Fonction pour vérrouiller un topic
+        public function unlockTopic($id){
+
+            // On instancie le manager
+            $topicManager = new TopicManager();
+
+            // On modifie le status verrouiller en TRUE
+            $topicManager->unlockTopic($id);
+
+            // On redirige vers la page du sujet modifié via l'id du sujet
+            $this->redirectTo("forum", "listPostsByTopic", $id);
+
+        }
         
 
     }

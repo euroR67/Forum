@@ -43,14 +43,26 @@
             return DAO::update($sql, ["id" => $id, "titre" => $titre]);
         }
 
+
         // Méthode pour verrouiller un topic
-        public function lockTopic() {
+        public function lockTopic($id) {
 
             $sql = "UPDATE ".$this->tableName." t
-                    SET titre = :titre
+                    SET t.closed = 1
                     WHERE t.id_topic = :id";
 
-            return DAO::update($sql, ["id" => $id, "titre" => $titre]);
+            return DAO::update($sql, ["id" => $id]);
+
+        }
+
+        // Méthode pour déverrouiller un topic
+        public function unlockTopic($id) {
+
+            $sql = "UPDATE ".$this->tableName." t
+                    SET t.closed = 0
+                    WHERE t.id_topic = :id";
+
+            return DAO::update($sql, ["id" => $id]);
 
         }
 

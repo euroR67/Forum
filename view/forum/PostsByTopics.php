@@ -29,7 +29,13 @@ $topic = $result["data"]['topic'];
 
         <div>
             <a href="#">Répondre</a>
-            <a href="#">Vérrouiller</a>
+            <?php 
+            if($topic->getClosed() == 0) { ?>
+                <a href="index.php?ctrl=forum&action=lockTopic&id=<?= $topic->getId() ?>">Vérrouiller</a>
+            <?php } else { ?>
+                <a href="index.php?ctrl=forum&action=unlockTopic&id=<?= $topic->getId() ?>">Déverrouiller</a>
+            <?php } ?>
+
             <a href="index.php?ctrl=forum&action=deleteTopic&id=<?= $topic->getId() ?>">Suppr. Topic</a>
         </div>
 
@@ -71,9 +77,15 @@ $topic = $result["data"]['topic'];
         <?php } ?>
     </div>
     <?php } ?>
-    <form  action="index.php?ctrl=forum&action=addPost&id=<?= $topic->getId() ?>" method="post" enctype="multipart/form-date">
-        <label>Répondre</label>
-        <textarea class="post" placeholder="Apporter une réponse au sujet.." name="text"></textarea>
-        <input class="submit" type="submit" name="submit" value="POSTER">
-    </form>
+
+    <?php 
+        if($topic->getClosed() == 0) { ?>
+            <form  action="index.php?ctrl=forum&action=addPost&id=<?= $topic->getId() ?>" method="post" enctype="multipart/form-date">
+                <label>Répondre</label>
+                <textarea class="post" placeholder="Apporter une réponse au sujet.." name="text"></textarea>
+                <input class="submit" type="submit" name="submit" value="POSTER">
+            </form>
+        <?php } else { ?>
+            <p>Ce sujet est vérrouiller, vous ne pouvez pas répondre</p>
+        <?php } ?>
 </div>
