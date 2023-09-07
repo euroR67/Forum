@@ -92,7 +92,7 @@
            // On récupère les données du formulaire
             $data = [
                 'texte'=> $text ,
-                'user_id'=> 11,
+                'user_id'=> $_SESSION["user"]->getId(),
                 'topic_id'=> $id
             ];
 
@@ -161,13 +161,13 @@
             // On ajoute le sujet et on récupère l'id du sujet
             $newTopicId = $topicManager->add([
                 "titre" => $titre,
-                "user_id" => 10,
+                "user_id" => $_SESSION["user"]->getId(),
                 "categorie_id" => $id]);
 
             // On ajoute le premier post dans le sujet avec l'id du sujet récupéré
             $postManager->add([
                 "texte" => $text,
-                "user_id" => 10,
+                "user_id" => $_SESSION["user"]->getId(),
                 "topic_id" => $newTopicId]);
             
             // On redirige vers la page du sujet créé via l'id du sujet

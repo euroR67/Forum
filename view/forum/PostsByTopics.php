@@ -28,15 +28,36 @@ $topic = $result["data"]['topic'];
         </div>
 
         <div>
-            <a href="#">Répondre</a>
+
             <?php 
-            if($topic->getClosed() == 0) { ?>
-                <a href="index.php?ctrl=forum&action=lockTopic&id=<?= $topic->getId() ?>">Vérrouiller</a>
+            // On vérifie que l'utilisateur en session pour permettre ou non de répondre a un topic
+            if((!isset($_SESSION["user"]))) { ?>
+                <a href="index.php?ctrl=security&action=login">Répondre</a>
             <?php } else { ?>
-                <a href="index.php?ctrl=forum&action=unlockTopic&id=<?= $topic->getId() ?>">Déverrouiller</a>
+                <a href="#">Répondre</a>
             <?php } ?>
 
-            <a href="index.php?ctrl=forum&action=deleteTopic&id=<?= $topic->getId() ?>">Suppr. Topic</a>
+            <?php 
+            // On vérifie que l'utilisateur en session est soit un admin ou l'auteur du sujet pour permettre la suppression du topic
+            if((App\Session::isAdmin())
+            || (isset($_SESSION["user"]) && $_SESSION["user"]->getId() == $topic->getUser()->getId() )) { ?>
+                <?php 
+                if($topic->getClosed() == 0) { ?>
+                    <a href="index.php?ctrl=forum&action=lockTopic&id=<?= $topic->getId() ?>">Vérrouiller</a>
+                <?php } else { ?>
+                    <a href="index.php?ctrl=forum&action=unlockTopic&id=<?= $topic->getId() ?>">Déverrouiller</a>
+                <?php } ?>
+            <?php } ?>
+
+
+
+            <?php 
+            // On vérifie que l'utilisateur en session est soit un admin ou l'auteur du sujet pour permettre la suppression du topic
+            if((App\Session::isAdmin())
+            || (isset($_SESSION["user"]) && $_SESSION["user"]->getId() == $topic->getUser()->getId() )) { ?>
+                <a href="index.php?ctrl=forum&action=deleteTopic&id=<?= $topic->getId() ?>">Suppr. Topic</a>
+            <?php } ?>
+
         </div>
 
     </div>
@@ -60,8 +81,14 @@ $topic = $result["data"]['topic'];
             </div>
         </div>
         <p class="message-post"><?= htmlspecialchars_decode($post->getTexte()) ?></p>
-        <!-- Bouton modifier le post -->
-        <a class="btn-edit-post" href="#">Modifier <i class="uil uil-edit"></i></a>
+
+        <?php 
+            // On vérifie que l'utilisateur en session est soit un admin ou l'auteur du sujet pour permettre la suppression du topic
+            if((App\Session::isAdmin())
+            || (isset($_SESSION["user"]) && $_SESSION["user"]->getId() == $post->getUser()->getId() )) { ?>
+                <!-- Bouton modifier le post -->
+                <a class="btn-edit-post" href="#">Modifier <i class="uil uil-edit"></i></a>
+            <?php } ?>
 
         <!-- Formulaire modifier le post avec action vers la méthode editPost du controller -->
         <form class="edit-post" action="index.php?ctrl=forum&action=editPost&id=<?= $post->getId() ?>" method="post" enctype="multipart/form-date">
@@ -73,19 +100,31 @@ $topic = $result["data"]['topic'];
         
         <!-- Affiche le bouton supprimer uniquement si $nombrePosts et supérieur a 1 -->
         <?php if ($nombrePosts > 1) { ?>
-            <a class="btn-delete" href="index.php?ctrl=forum&action=deletePost&id=<?= $post->getId() ?>">Supprimer</a>
+
+            <?php 
+            // On vérifie que l'utilisateur en session est soit un admin ou l'auteur du sujet pour permettre la suppression d'un post
+            if((App\Session::isAdmin())
+            || (isset($_SESSION["user"]) && $_SESSION["user"]->getId() == $post->getUser()->getId() )) { ?>
+                <a class="btn-delete" href="index.php?ctrl=forum&action=deletePost&id=<?= $post->getId() ?>">Supprimer</a>
+            <?php } ?>
+            
         <?php } ?>
     </div>
     <?php } ?>
 
     <?php 
-        if($topic->getClosed() == 0) { ?>
-            <form  action="index.php?ctrl=forum&action=addPost&id=<?= $topic->getId() ?>" method="post" enctype="multipart/form-date">
+        if((isset($_SESSION["user"])) && $topic->getClosed() == 0) { ?>
+
+            <form  action="index.php?ctrl=forum&action=addPost&id=<?= $topic->getId() ?>" method="post" enctype="multipart/form-data">
                 <label>Répondre</label>
                 <textarea class="post" placeholder="Apporter une réponse au sujet.." name="text"></textarea>
                 <input class="submit" type="submit" name="submit" value="POSTER">
             </form>
-        <?php } else { ?>
+
+        <?php } elseif($topic->getClosed() == 1) { ?>
+
             <p>Ce sujet est vérrouiller, vous ne pouvez pas répondre</p>
+
         <?php } ?>
+
 </div>

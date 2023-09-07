@@ -6,8 +6,7 @@ $categories = $result["data"]['categories'];
 <ul class="categorie-list">
     <h1>Liste des catégories</h1>
     <?php
-foreach($categories as $categorie) {
-    ?>
+foreach($categories as $categorie) { ?>
     <li>
         <a class="categorie-link" href="index.php?ctrl=forum&action=listTopicsByCategorie&id=<?=$categorie->getId()?>">
             <?=$categorie->getNomCategorie()?>

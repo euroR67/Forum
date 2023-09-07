@@ -9,9 +9,19 @@ $categories = $result["data"]['categories'];
 
 
 <div class="topics-container">
-    <div class="btn-add">
-        <a class="nv_sujet" href="#">Nouveau Sujet</a>
-    </div>
+
+    <?php 
+    // On vérifie que l'utilisateur est en session pour permettre la création d'un nouveau sujet
+    if((!isset($_SESSION["user"]))) { ?>
+        <div class="btn-add">
+            <a class="nv_sujet" href="index.php?ctrl=security&action=login">Nouveau Sujet</a>
+        </div>
+    <?php } else { ?>
+        <div class="btn-add">
+            <a class="nv_sujet" href="#">Nouveau Sujet</a>
+        </div>
+    <?php } ?>
+
 <?php
 if (empty($topics)) : ?>
     <p>Aucun sujet n'a été trouvé dans cette catégorie.</p>
@@ -60,10 +70,15 @@ if (empty($topics)) : ?>
         </table>
     </div>
     <?php endif; ?>
-    <!-- Formulaire pour ajouter un nouveau sujet et le premier post -->
-    <form action="index.php?ctrl=forum&action=ajoutSujet&id=<?= $categories->getId() ?>" method="post" enctype="multipart/form-date">
-        <label>Nouveau sujet</label>
-        <input class="champ-titre" type="text" name="titre" placeholder="Titre du sujet">
-        <textarea placeholder="Apporter une réponse au sujet.." name="text"></textarea>
-        <input class="submit" type="submit" name="submit" value="POSTER">
-    </form>
+
+    <?php 
+    // On vérifie que l'utilisateur en session pour permettre ou non la création d'un nouveau topic
+    if((isset($_SESSION["user"]))) { ?>
+        <!-- Formulaire pour ajouter un nouveau sujet et le premier post -->
+        <form action="index.php?ctrl=forum&action=ajoutSujet&id=<?= $categories->getId() ?>" method="post" enctype="multipart/form-date">
+            <label>Nouveau sujet</label>
+            <input class="champ-titre" type="text" name="titre" placeholder="Titre du sujet">
+            <textarea placeholder="Apporter une réponse au sujet.." name="text"></textarea>
+            <input class="submit" type="submit" name="submit" value="POSTER">
+        </form>
+    <?php } ?>

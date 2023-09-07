@@ -159,6 +159,21 @@
                 ];
             }
             
+        }
+
+        // Fonction pour récupérer tout les utilisateurs et envoyer a la vue listUsers.php
+        public function usersList(){
+
+            // On instancie les managers
+            $userManager = new UserManager();
+
+            // On récupère les utilisateurs et on les envoie à la vue
+            return [
+                "view" => VIEW_DIR."security/listUsers.php",
+                "data" => [
+                    "users" => $userManager->findAll(["pseudo", "ASC"])
+                ]
+            ];
 
         }
 

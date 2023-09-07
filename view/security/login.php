@@ -14,4 +14,5 @@
     <div>
         <input type="submit" name="submit" id="submit" value="Se connecter">
     </div>
+    <a href="index.php?ctrl=security&action=register">Pas de compte ? Inscrivez-vous !</a>
 </form>
