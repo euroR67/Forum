@@ -88,20 +88,19 @@ $topic = $result["data"]['topic'];
         <p class="message-post"><?= htmlspecialchars_decode($post->getTexte()) ?></p>
 
         <?php 
-            // On vérifie que l'utilisateur en session est soit un admin ou l'auteur du sujet pour permettre la suppression du topic
+            // On vérifie que l'utilisateur en session est soit un admin ou l'auteur du sujet pour permettre la modification du post
             if((App\Session::isAdmin())
             || (isset($_SESSION["user"]) && $_SESSION["user"]->getId() == $post->getUser()->getId()) && ($_SESSION["user"]->getBannedUntil() == NULL)) { ?>
                 <!-- Bouton modifier le post -->
                 <a class="btn-edit-post" href="#">Modifier <i class="uil uil-edit"></i></a>
+                <!-- Formulaire modifier le post avec action vers la méthode editPost du controller -->
+                <form class="edit-post" action="index.php?ctrl=forum&action=editPost&id=<?= $post->getId() ?>" method="post" enctype="multipart/form-date">
+                    <textarea class="post" type="text" name="texte"><?= $post->getTexte() ?></textarea>
+                    <input class="submit" type="submit" value="MODIFIER">
+                    <!-- Bouton pour annuler la modification en faisant display none sur le form et display block sur le post-text -->
+                    <a class="cancel-update-post" href="/">Annuler</a>
+                </form>
             <?php } ?>
-
-        <!-- Formulaire modifier le post avec action vers la méthode editPost du controller -->
-        <form class="edit-post" action="index.php?ctrl=forum&action=editPost&id=<?= $post->getId() ?>" method="post" enctype="multipart/form-date">
-            <textarea class="post" type="text" name="texte"><?= $post->getTexte() ?></textarea>
-            <input class="submit" type="submit" value="MODIFIER">
-            <!-- Bouton pour annuler la modification en faisant display none sur le form et display block sur le post-text -->
-            <a class="cancel-update-post" href="/">Annuler</a>
-        </form>
         
         <!-- Affiche le bouton supprimer uniquement si $nombrePosts et supérieur a 1 -->
         <?php if ($nombrePosts > 1) { ?>

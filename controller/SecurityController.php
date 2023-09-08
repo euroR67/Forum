@@ -16,7 +16,7 @@
             // On instancie le manager
             $userManager = new UserManager();
 
-            if(isset($_POST["submit"])) {
+            if(isset($_POST["register"])) {
 
                 // On filtre les champs de saisis
                 $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
@@ -79,7 +79,7 @@
             // On instancie le manager
             $userManager = new UserManager();
 
-            if(isset($_POST["submit"])) {
+            if(isset($_POST["login"])) {
 
                 // On filtre les champs de saisis
                 $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
@@ -89,10 +89,12 @@
                 if($email && $password) {
                     // On récupère l'utilisateur en fonction de son email
                     $user = $userManager->findOneByEmail($email);
+                    // On récupère le mot de passe de l'utilisateur dans la base de donnée
+                    $hash = $user->getPassword();
                     // On vérifie que l'utilisateur existe bien
                     if($user) {
                         // On compare le mot de passe
-                        if(password_verify($password, $user->getPassword())) {
+                        if(password_verify($password, $hash)) {
                             // On ouvre la session de l'utilisateur
                             Session::setUser($user);
                             // On redirige vers la liste des catégories
