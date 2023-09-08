@@ -15,16 +15,21 @@ $topic = $result["data"]['topic'];
         <div>
             <h2 id="topic-title">Sujet : <?= $topic->getTitre() ?></h2>
 
-            <!-- On fait apparaitre l'input qui permet de modifier le titre du sujet avec form -->
-            <form id="edit-form" action="index.php?ctrl=forum&action=editTopicTitle&id=<?= $topic->getId() ?>" method="post">
-                <input type="text" name="titre" value="<?= $topic->getTitre() ?>">
-                <input type="submit" value="Modifier">
-                <!-- Bouton pour annuler la modification en faisant display none sur le form et display block sur topic-title -->
-                <a class="cancel-update-title" href="/">Annuler</a>
-            </form>
+            <?php 
+            // On vérifie que l'utilisateur en session est soit un admin ou l'auteur du sujet pour permettre la modification du titre du sujet
+            if((App\Session::isAdmin())
+            || (isset($_SESSION["user"]) && $_SESSION["user"]->getId() == $topic->getUser()->getId() )) { ?>
+                <!-- Bouton pour modifier le titre du sujet -->
+                <a href="#" id="edit-link"><i class="uil uil-edit"></i></a>
+                <!-- On fait apparaitre l'input qui permet de modifier le titre du sujet avec form -->
+                <form id="edit-form" action="index.php?ctrl=forum&action=editTopicTitle&id=<?= $topic->getId() ?>" method="post">
+                    <input type="text" name="titre" value="<?= $topic->getTitre() ?>">
+                    <input type="submit" value="Modifier">
+                    <!-- Bouton pour annuler la modification en faisant display none sur le form et display block sur topic-title -->
+                    <a class="cancel-update-title" href="/">Annuler</a>
+                </form>
+            <?php } ?>
 
-            <!-- Bouton pour modifier le titre du sujet -->
-            <a href="#" id="edit-link"><i class="uil uil-edit"></i></a>
         </div>
 
         <div>
@@ -33,14 +38,14 @@ $topic = $result["data"]['topic'];
             // On vérifie que l'utilisateur en session pour permettre ou non de répondre a un topic
             if((!isset($_SESSION["user"]))) { ?>
                 <a href="index.php?ctrl=security&action=login">Répondre</a>
-            <?php } else { ?>
+            <?php } elseif(($_SESSION["user"]->getBannedUntil() == NULL)) { ?>
                 <a href="#">Répondre</a>
             <?php } ?>
 
             <?php 
             // On vérifie que l'utilisateur en session est soit un admin ou l'auteur du sujet pour permettre la suppression du topic
             if((App\Session::isAdmin())
-            || (isset($_SESSION["user"]) && $_SESSION["user"]->getId() == $topic->getUser()->getId() )) { ?>
+            || (isset($_SESSION["user"]) && $_SESSION["user"]->getId() == $topic->getUser()->getId()) && ($_SESSION["user"]->getBannedUntil() == NULL)) { ?>
                 <?php 
                 if($topic->getClosed() == 0) { ?>
                     <a href="index.php?ctrl=forum&action=lockTopic&id=<?= $topic->getId() ?>">Vérrouiller</a>
@@ -54,7 +59,7 @@ $topic = $result["data"]['topic'];
             <?php 
             // On vérifie que l'utilisateur en session est soit un admin ou l'auteur du sujet pour permettre la suppression du topic
             if((App\Session::isAdmin())
-            || (isset($_SESSION["user"]) && $_SESSION["user"]->getId() == $topic->getUser()->getId() )) { ?>
+            || (isset($_SESSION["user"]) && $_SESSION["user"]->getId() == $topic->getUser()->getId()) && ($_SESSION["user"]->getBannedUntil() == NULL)) { ?>
                 <a href="index.php?ctrl=forum&action=deleteTopic&id=<?= $topic->getId() ?>">Suppr. Topic</a>
             <?php } ?>
 
@@ -85,7 +90,7 @@ $topic = $result["data"]['topic'];
         <?php 
             // On vérifie que l'utilisateur en session est soit un admin ou l'auteur du sujet pour permettre la suppression du topic
             if((App\Session::isAdmin())
-            || (isset($_SESSION["user"]) && $_SESSION["user"]->getId() == $post->getUser()->getId() )) { ?>
+            || (isset($_SESSION["user"]) && $_SESSION["user"]->getId() == $post->getUser()->getId()) && ($_SESSION["user"]->getBannedUntil() == NULL)) { ?>
                 <!-- Bouton modifier le post -->
                 <a class="btn-edit-post" href="#">Modifier <i class="uil uil-edit"></i></a>
             <?php } ?>
@@ -113,7 +118,7 @@ $topic = $result["data"]['topic'];
     <?php } ?>
 
     <?php 
-        if((isset($_SESSION["user"])) && $topic->getClosed() == 0) { ?>
+        if((isset($_SESSION["user"])) && $topic->getClosed() == 0 && ($_SESSION["user"]->getBannedUntil() == NULL)) { ?>
 
             <form  action="index.php?ctrl=forum&action=addPost&id=<?= $topic->getId() ?>" method="post" enctype="multipart/form-data">
                 <label>Répondre</label>

@@ -5,6 +5,16 @@
 
 <h1>Profile</h1>
 
+<!-- On informe l'utilisateur si son compte est banni et jusqu'à quand -->
+<?php if($users->getBannedUntil() !== NULL) { ?>
+
+    <p style="color: red;">Vous êtes banni jusqu'au <?= $users->getBannedUntil() ?></p>
+
+    <!-- On informe l'utilisateur que l'accès au fonctionnalité du site est limité pendant son ban -->
+    <p style="color: red;">L'accès a certaines fonctionnalité du forum vous est limité durant votre ban</p>
+
+<?php } ?>
+
 <p>Pseudo : <?= $users->getPseudo() ?></p>
 <p>Date d'inscription : <?= $users->getDateInscription() ?></p>
 <p>Pseudo : <?= $users->getRole() ?></p>

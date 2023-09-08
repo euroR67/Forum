@@ -10,15 +10,16 @@ $categories = $result["data"]['categories'];
 
 <div class="topics-container">
 
-    <?php 
-    // On vérifie que l'utilisateur est en session pour permettre la création d'un nouveau sujet
-    if((!isset($_SESSION["user"]))) { ?>
-        <div class="btn-add">
-            <a class="nv_sujet" href="index.php?ctrl=security&action=login">Nouveau Sujet</a>
-        </div>
-    <?php } else { ?>
+    <?php
+    // On vérifie qu'une session est en cours et que l'utilisateur n'est pas banni
+    if((isset($_SESSION["user"])) && ($_SESSION["user"]->getBannedUntil() == NULL)) { ?>
         <div class="btn-add">
             <a class="nv_sujet" href="#">Nouveau Sujet</a>
+        </div>
+        <!-- Si non si l'utilisateur est pas banni ou que aucune session n'est en cours -->
+    <?php } elseif((!isset($_SESSION["user"])) || ($_SESSION["user"]->getBannedUntil() == NULL)) { ?>
+        <div class="btn-add">
+            <a class="nv_sujet" href="index.php?ctrl=security&action=login">Nouveau Sujet</a>
         </div>
     <?php } ?>
 
@@ -73,7 +74,7 @@ if (empty($topics)) : ?>
 
     <?php 
     // On vérifie que l'utilisateur en session pour permettre ou non la création d'un nouveau topic
-    if((isset($_SESSION["user"]))) { ?>
+    if((isset($_SESSION["user"])) && ($_SESSION["user"]->getBannedUntil() == NULL)) { ?>
         <!-- Formulaire pour ajouter un nouveau sujet et le premier post -->
         <form action="index.php?ctrl=forum&action=ajoutSujet&id=<?= $categories->getId() ?>" method="post" enctype="multipart/form-date">
             <label>Nouveau sujet</label>

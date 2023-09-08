@@ -177,6 +177,34 @@
 
         }
 
+        // Fonction pour bannir un utilisateur pour une durée déterminé en récupérant la date fourni par l'input type date
+        public function banUser($id) {
+
+            // On instancie le manager
+            $userManager = new UserManager();
+
+            // On récupère la date fourni par l'input type date
+            $bannedUntil = $_POST["bannedUntil"];
+            // On banni l'utilisateur
+            $userManager->banUser($id, $bannedUntil);
+            // On redirige vers la liste des utilisateurs
+            $this->redirectTo("security", "usersList");
+
+        }
+
+        // Fonction pour débannir un utilisateur
+        public function unbanUser($id) {
+
+            // On instancie le manager
+            $userManager = new UserManager();
+
+            // On débanni l'utilisateur
+            $userManager->unbanUser($id);
+            // On redirige vers la liste des utilisateurs
+            $this->redirectTo("security", "usersList");
+
+        }
+
     }
 
 ?>

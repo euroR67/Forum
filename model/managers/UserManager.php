@@ -46,4 +46,33 @@
             );
         }
 
+        // Requête personnalisé pour ban un utilisateur pour une durée determiné
+        public function banUser($id, $bannedUntil){
+
+            $sql = "
+                UPDATE ".$this->tableName." u
+                SET u.bannedUntil = :bannedUntil
+                WHERE u.id_user = :id
+                ";
+
+            return DAO::update($sql, [
+                "id" => $id,
+                "bannedUntil" => $bannedUntil
+            ]);
+        }
+
+        // Requête personnalisé pour débannir un utilisateur
+        public function unbanUser($id){
+
+            $sql = "
+                UPDATE ".$this->tableName." u
+                SET u.bannedUntil = NULL
+                WHERE u.id_user = :id
+                ";
+
+            return DAO::update($sql, [
+                "id" => $id
+            ]);
+        }
+
     }

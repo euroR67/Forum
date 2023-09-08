@@ -11,6 +11,7 @@
         private $email;
         private $dateInscription;
         private $role;
+        private $bannedUntil;
 
         public function __construct($data){         
             $this->hydrate($data);        
@@ -24,6 +25,21 @@
         // Set the value of id
         public function setId($id) {
                 $this->id = $id;
+                return $this;
+        }
+
+        // Get the formatted value of bannedUntil
+        public function getBannedUntil() {
+                if ($this->bannedUntil !== null) {
+                return date('d/m/Y', strtotime($this->bannedUntil));
+                }
+                return null;
+        }
+    
+
+        // Set the value of bannedUntil
+        public function setBannedUntil($bannedUntil) {
+                $this->bannedUntil = $bannedUntil;
                 return $this;
         }
 
