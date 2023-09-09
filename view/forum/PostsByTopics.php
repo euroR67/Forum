@@ -19,8 +19,9 @@ $topic = $result["data"]['topic'];
             $isAdmin = App\Session::isAdmin();
             $isAuthor = (isset($_SESSION["user"]) && ($_SESSION["user"]->getId() == $topic->getUser()->getId()));
             $isSession = isset($_SESSION["user"]);
+            $isBan = (isset($_SESSION["user"]) && ($_SESSION["user"]->getBannedUntil() == NULL));
             // On vérifie que l'utilisateur en session est soit un admin ou l'auteur du sujet pour permettre la modification du titre du sujet
-            if(($isSession && $isAuthor) || $isAdmin) { ?>
+            if(($isSession && $isAuthor && $isBan) || $isAdmin) { ?>
                 <!-- Bouton pour modifier le titre du sujet -->
                 <a href="#" id="edit-link"><i class="uil uil-edit"></i></a>
                 <!-- On fait apparaitre l'input qui permet de modifier le titre du sujet avec form -->
