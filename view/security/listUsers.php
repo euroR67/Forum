@@ -29,30 +29,3 @@ $users = $result["data"]["users"];
     <?php } ?>
     
 </ul>
-
-<script>
-
-// On récupère tout les boutons bannir
-let banButtons = document.querySelectorAll("button");
-
-// On boucle sur tout les boutons bannir
-banButtons.forEach(banButton => {
-
-    // On ajoute un event listener sur chaque bouton bannir
-    banButton.addEventListener("click", function() {
-
-        // On récupère le form juste après le bouton bannir
-        let form = banButton.nextElementSibling;
-
-        // On affiche le form
-        form.style.display = "block";
-
-        // On cache le bouton bannir
-        banButton.style.display = "none";
-
-    })
-
-})
-
-
-</script>

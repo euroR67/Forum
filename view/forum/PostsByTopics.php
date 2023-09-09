@@ -16,9 +16,11 @@ $topic = $result["data"]['topic'];
             <h2 id="topic-title">Sujet : <?= $topic->getTitre() ?></h2>
 
             <?php 
+            $isAdmin = App\Session::isAdmin();
+            $isAuthor = (isset($_SESSION["user"]) && ($_SESSION["user"]->getId() == $topic->getUser()->getId()));
+            $isSession = isset($_SESSION["user"]);
             // On vérifie que l'utilisateur en session est soit un admin ou l'auteur du sujet pour permettre la modification du titre du sujet
-            if((App\Session::isAdmin())
-            || (isset($_SESSION["user"]) && $_SESSION["user"]->getId() == $topic->getUser()->getId() )) { ?>
+            if(($isSession && $isAuthor) || $isAdmin) { ?>
                 <!-- Bouton pour modifier le titre du sujet -->
                 <a href="#" id="edit-link"><i class="uil uil-edit"></i></a>
                 <!-- On fait apparaitre l'input qui permet de modifier le titre du sujet avec form -->
@@ -35,7 +37,7 @@ $topic = $result["data"]['topic'];
         <div>
 
             <?php 
-            // On vérifie que l'utilisateur en session pour permettre ou non de répondre a un topic
+            // On vérifie que l'utilisateur est en session pour permettre ou non de répondre a un topic
             if((!isset($_SESSION["user"]))) { ?>
                 <a href="index.php?ctrl=security&action=login">Répondre</a>
             <?php } elseif(($_SESSION["user"]->getBannedUntil() == NULL)) { ?>
@@ -86,11 +88,22 @@ $topic = $result["data"]['topic'];
             </div>
         </div>
         <p class="message-post"><?= htmlspecialchars_decode($post->getTexte()) ?></p>
+        <?php if ($post->getLastModified() !== null) { 
+            // Convertir la date au format français
+            $date = new DateTime($post->getLastModified());
+            $dateFr = $date->format('d/m/Y H:i'); // Jour/Mois/Année Heure:Minute
+        ?>
+            <p>Modifié le <?= $dateFr ?> par <?= $post->getModifiedBy() ?></p>
+        <?php } ?>
+
+
 
         <?php 
+            $isAuthor = (isset($_SESSION["user"]) && ($_SESSION["user"]->getId() == $post->getUser()->getId()));
+            $isAdmin = App\Session::isAdmin();
+            $isNotBanned = (isset($_SESSION["user"]) && ($_SESSION["user"])->getBannedUntil() == NULL);
             // On vérifie que l'utilisateur en session est soit un admin ou l'auteur du sujet pour permettre la modification du post
-            if((App\Session::isAdmin())
-            || (isset($_SESSION["user"]) && $_SESSION["user"]->getId() == $post->getUser()->getId()) && ($_SESSION["user"]->getBannedUntil() == NULL)) { ?>
+            if ($isAuthor && $isNotBanned || $isAdmin) { ?>
                 <!-- Bouton modifier le post -->
                 <a class="btn-edit-post" href="#">Modifier <i class="uil uil-edit"></i></a>
                 <!-- Formulaire modifier le post avec action vers la méthode editPost du controller -->

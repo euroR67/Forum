@@ -89,10 +89,10 @@
                 if($email && $password) {
                     // On récupère l'utilisateur en fonction de son email
                     $user = $userManager->findOneByEmail($email);
-                    // On récupère le mot de passe de l'utilisateur dans la base de donnée
-                    $hash = $user->getPassword();
                     // On vérifie que l'utilisateur existe bien
                     if($user) {
+                        // On récupère le mot de passe de l'utilisateur dans la base de donnée
+                        $hash = $user->getPassword();
                         // On compare le mot de passe
                         if(password_verify($password, $hash)) {
                             // On ouvre la session de l'utilisateur

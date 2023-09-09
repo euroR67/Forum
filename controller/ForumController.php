@@ -118,10 +118,20 @@
             $firstPost = $postManager->findFirstPostByTopic($idTopic);
            
             $idFirstPost = $firstPost->getId();
-            // Si l'id du post est différent de l'id du premier post du topic, on supprime le post
-            if($id != $idFirstPost){
-                $postManager->delete($id);
+
+            // On vérifie que l'action est effectuer par un admin ou l'auteur du post
+            if((Session::isAdmin())
+            || (isset($_SESSION["user"]) && $_SESSION["user"]->getId() == $post->getUser()->getId() )) {
+                // Si l'id du post est différent de l'id du premier post du topic, on supprime le post
+                if($id != $idFirstPost){
+                    $postManager->delete($id);
+                }
+            } else {
+                // On redirige vers la page du topic
+                $this->redirectTo("forum", "listPostsByTopic", $idTopic);
             }
+
+            
 
             // On redirige vers la page du topic
             $this->redirectTo("forum", "listPostsByTopic", $idTopic);
@@ -138,8 +148,16 @@
             $topic = $topicManager->findOneById($id);
             $idTopic = $topic->getId();
 
-            // On supprime le sujet et tous les posts associés
-            $topicManager->delete($idTopic);
+            // On vérifie que l'action est effectuer par un admin ou l'auteur du post
+            if((Session::isAdmin())
+            || (isset($_SESSION["user"]) && $_SESSION["user"]->getId() == $topic->getUser()->getId() )) {
+                // On supprime le sujet et tous les posts associés
+                $topicManager->delete($idTopic);
+            } else {
+                // On redirige vers la page du topic
+                $this->redirectTo("forum", "listPostsByTopic", $idTopic);
+            }
+            
 
             // On redirige vers la liste des topics de la catégorie du sujet supprimé
             $this->redirectTo("forum", "listTopicsByCategorie", $topic->getCategorie()->getId());
@@ -233,37 +251,56 @@
             // On instancie les managers
             $topicManager = new TopicManager();
 
+            // On récupère l'id du topic
+            $topic = $topicManager->findOneById($id);
+
             // On récupère le nouveau titre du sujet
             $titre = filter_input(INPUT_POST, 'titre', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-            // On modifie le titre du sujet
-            $topicManager->updateTopic($id, $titre);
+            // On vérifie que l'action est effectuer par un admin ou l'auteur du topic
+            if((Session::isAdmin())
+            || (isset($_SESSION["user"]) && $_SESSION["user"]->getId() == $topic->getUser()->getId() )) {
+                // On modifie le titre du sujet
+                $topicManager->updateTopic($id, $titre);
+            } else {
+                // On redirige vers la page du topic
+                $this->redirectTo("forum", "listPostsByTopic", $id);
+            }
 
             // On redirige vers la page du sujet modifié via l'id du sujet
             $this->redirectTo("forum", "listPostsByTopic", $id);
 
         }
 
-        // Méthode pour modifier un post
         public function editPost($id){
 
             // On instancie les managers
             $postManager = new PostManager();
-
+        
             // On récupère l'id du topic du post
             $post = $postManager->findOneById($id);
             $idPost = $post->getTopic()->getId();
-
+        
             // On récupère le nouveau texte du post
             $texte = filter_input(INPUT_POST, 'texte', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-
-            // On modifie le texte du post
-            $postManager->updatePost($id, $texte);
-            // On redirige vers la page du sujet modifié via l'id du sujet
-            $this->redirectTo("forum", "listPostsByTopic", $idPost);
+        
+            // Obtenez l'ID de l'utilisateur ou de l'administrateur actuel
+            $modifiedBy = (isset($_SESSION["user"])) ? $_SESSION["user"]->getPseudo() : null;
+        
+            // On vérifie que l'action est effectuer par un admin ou l'auteur du post
+            if((Session::isAdmin())
+            || (isset($_SESSION["user"]) && $_SESSION["user"]->getId() == $post->getUser()->getId() )) {
+                // On modifie le texte du post
+                $postManager->updatePost($id, $texte, $modifiedBy);
+            } else {
+                // On redirige vers la page du topic
+                $this->redirectTo("forum", "listPostsByTopic", $idPost);
+            }
             
-
+            // Redirigez vers la page du sujet modifié via l'id du sujet
+            $this->redirectTo("forum", "listPostsByTopic", $idPost);
         }
+        
 
         // Fonction pour vérrouiller un topic
         public function lockTopic($id){
@@ -271,8 +308,18 @@
             // On instancie le manager
             $topicManager = new TopicManager();
 
-            // On modifie le status verrouiller en TRUE
-            $topicManager->lockTopic($id);
+            // On récupère l'id du topic
+            $topic = $topicManager->findOneById($id);
+
+            // On vérifie que l'action est effectuer par un admin ou l'auteur du topic
+            if((Session::isAdmin())
+            || (isset($_SESSION["user"]) && $_SESSION["user"]->getId() == $topic->getUser()->getId() )) {
+                // On modifie le status verrouiller en TRUE
+                $topicManager->lockTopic($id);
+            } else {
+                // On redirige vers la page du topic
+                $this->redirectTo("forum", "listPostsByTopic", $id);
+            }
 
             // On redirige vers la page du sujet modifié via l'id du sujet
             $this->redirectTo("forum", "listPostsByTopic", $id);
@@ -285,8 +332,18 @@
             // On instancie le manager
             $topicManager = new TopicManager();
 
-            // On modifie le status verrouiller en TRUE
-            $topicManager->unlockTopic($id);
+            // On récupère l'id du topic
+            $topic = $topicManager->findOneById($id);
+
+            // On vérifie que l'action est effectuer par un admin ou l'auteur du topic
+            if((Session::isAdmin())
+            || (isset($_SESSION["user"]) && $_SESSION["user"]->getId() == $topic->getUser()->getId() )) {
+                // On modifie le status verrouiller en FALSE
+                $topicManager->unlockTopic($id);
+            } else {
+                // On redirige vers la page du topic
+                $this->redirectTo("forum", "listPostsByTopic", $id);
+            }
 
             // On redirige vers la page du sujet modifié via l'id du sujet
             $this->redirectTo("forum", "listPostsByTopic", $id);

@@ -28,23 +28,26 @@ document.addEventListener("DOMContentLoaded", function() {
     updateCat();
     
     // On utilise JavaScript pour permettre à l'utilisateur de modifier le titre du sujet
-    function updateTitle() {
-        // On récupère l'id du bouton pour modifier le titre du sujet
-        const editLink = document.getElementById("edit-link");
+function updateTitle() {
+    // On récupère l'id du bouton pour modifier le titre du sujet
+    const editLink = document.getElementById("edit-link");
+    
+    // On vérifie si l'élément editLink existe avant d'attacher l'écouteur d'événements
+    if (editLink) {
         // On récupère l'id du titre du sujet
         const topicTitle = document.getElementById("topic-title");
         // On récupère l'id du form pour modifier le titre du sujet
         const editForm = document.getElementById("edit-form");
         // On récupère l'id du bouton pour annuler la modification du titre du sujet
         const cancelUpdateTitle = document.querySelector(".cancel-update-title");
-    
+
         // On fait apparaitre l'input qui permet de modifier le titre du sujet
         editLink.addEventListener("click", function(e) {
             e.preventDefault();
             topicTitle.style.display = "none";
             editForm.style.display = "block";
         });
-    
+
         // On fait disparaitre l'input qui permet de modifier le titre du sujet
         cancelUpdateTitle.addEventListener("click", function(e) {
             e.preventDefault();
@@ -52,7 +55,10 @@ document.addEventListener("DOMContentLoaded", function() {
             editForm.style.display = "none";
         });
     }
-    updateTitle();
+}
+
+updateTitle();
+
 
     function updatePost() {
         // Sélectionnez tous les boutons "Modifier le post"
@@ -98,5 +104,31 @@ document.addEventListener("DOMContentLoaded", function() {
     
     updatePost();
     
+    function banUser() {
+        // On récupère tout les boutons bannir
+        let banButtons = document.querySelectorAll("button");
+
+        // On boucle sur tout les boutons bannir
+        banButtons.forEach(banButton => {
+
+            // On ajoute un event listener sur chaque bouton bannir
+            banButton.addEventListener("click", function() {
+
+                // On récupère le form juste après le bouton bannir
+                let form = banButton.nextElementSibling;
+
+                // On affiche le form
+                form.style.display = "block";
+
+                // On cache le bouton bannir
+                banButton.style.display = "none";
+
+            })
+
+        })
+    }
+
+    banUser();
+
 
 });

@@ -63,15 +63,15 @@
 
         }
 
-        // Méthode pour modifier un post depuis son id
-        public function updatePost($id, $texte) {
-
+        public function updatePost($id, $texte, $modifiedBy) {
             $sql = "UPDATE ".$this->tableName." p
-                    SET texte = :texte 
+                    SET texte = :texte,
+                        lastModified = NOW(), -- Utilisez la fonction SQL NOW() pour obtenir la date actuelle
+                        modifiedBy = :modifiedBy
                     WHERE p.id_post = :id";
-
-            return DAO::update($sql, ['id' => $id, 'texte' => $texte]);
-
+        
+            return DAO::update($sql, ['id' => $id, 'texte' => $texte, 'modifiedBy' => $modifiedBy]);
         }
+        
 
     }

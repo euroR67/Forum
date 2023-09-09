@@ -10,6 +10,8 @@
         private $user;
         private $datePost;
         private $topic;
+        private $lastModified;
+        private $modifiedBy;
 
         public function __construct($data) {
             $this->hydrate($data);
@@ -20,6 +22,35 @@
                 return $this->id;
         }
 
+        // Set the value of id
+        public function setId($id) {
+                $this->id = $id;
+                return $this;
+        }
+
+        // Get the value of lastModified
+        public function getLastModified() {
+                return $this->lastModified;
+        }
+        
+
+        // Set the value of lastModified
+        public function setLastModified($lastModified) {
+                $this->lastModified = $lastModified;
+                return $this;
+        }
+
+        // Get the value of modifiedBy
+        public function getModifiedBy() {
+                return $this->modifiedBy;
+        }
+
+        // Set the value of modifiedBy
+        public function setModifiedBy($modifiedBy) {
+                $this->modifiedBy = $modifiedBy;
+                return $this;
+        }
+
         // Get the value of topic
         public function getTopic() {
                 return $this->topic;
@@ -28,12 +59,6 @@
         // Set the value of topic
         public function setTopic($topic) {
                 $this->topic = $topic;
-                return $this;
-        }
-
-        // Set the value of id
-        public function setId($id) {
-                $this->id = $id;
                 return $this;
         }
 
