@@ -97,6 +97,23 @@
                         if(password_verify($password, $hash)) {
                             // On ouvre la session de l'utilisateur
                             Session::setUser($user);
+
+                            // Récupère la date de fin de ban
+                            $bannedUntilStr = $user->getBannedUntil();
+                            
+                            // Vérifie si la date de fin de ban est dépassée
+                            if ($bannedUntilStr) {
+                                $bannedUntil = \DateTime::createFromFormat('d/m/Y', $bannedUntilStr);
+                                $isBanned = ($bannedUntil < new \DateTime());
+                            } else {
+                                $isBanned = false;
+                            }
+
+                            // Si la durée du ban est dépassée, on retire le ban avec la méthode unbanUser
+                            if ($isBanned) {
+                                $userManager->unbanUser($user->getId());
+                            }
+
                             // On redirige vers la liste des catégories
                             $this->redirectTo("forum", "listCategories");
                         } else {
