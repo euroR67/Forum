@@ -2,11 +2,16 @@
 
 $posts = $result["data"]['posts'];
 $topic = $result["data"]['topic'];
-var_dump($topic->getUser());die;
 // On vérifie si l'utilisateur connecté est admin
 $isAdmin = App\Session::isAdmin();
-// On vérifie si l'utilisateur connecté est l'auteur du sujet
-$isAuthor = (!empty($_SESSION["user"]) && isset($_SESSION["user"]) && $_SESSION["user"]->getId() == $topic->getUser()->getId());
+
+// On vérifie si l'auteur du topic existe
+if ($topic->getUser()){
+    // On vérifie si l'utilisateur connecté est l'auteur du topic
+    $isAuthor = (isset($_SESSION["user"]) && $_SESSION["user"]->getId() == $topic->getUser()->getId());
+} else { 
+    $isAuthor = false ;
+}
 // On vérifie si le compte de $isAuthor existe
 // On vérifie si une session est en cours
 $isSession = isset($_SESSION["user"]);
@@ -85,9 +90,17 @@ $isBan = (isset($_SESSION["user"]) && ($_SESSION["user"]->getBannedUntil() == NU
                 <img src="https://picsum.photos/50/50" alt="">
             </figure>
             <div class="user-date">
-                <a href="index.php?ctrl=security&action=profile&id=<?= $post->getUser()->getId() ?>">
-                    <?= $post->getUser() ?>
-                </a>
+                
+                <!-- On affiche le pseudo si l'utilisateur existe sinon on affiche utilisateur supprimée -->
+                <?php 
+                    if($post->getUser()) { ?>
+                        <a href="index.php?ctrl=security&action=profile&id=<?= $post->getUser()->getId() ?>">
+                            <?= $post->getUser() ?>
+                        </a>
+                    <?php } else { ?>
+                        <p>Utilisateur supprimée</p>
+                    <?php } ?>
+                
                 <p>Le <?= $post->getDatePost() ?></p>
             </div>
         </div>
