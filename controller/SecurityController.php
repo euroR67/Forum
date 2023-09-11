@@ -230,8 +230,15 @@
             // On instancie le manager
             $userManager = new UserManager();
 
-            // On supprime l'utilisateur
-            $userManager->delete($id);
+            // On vérifie que l'action est effectué par un admin ou par le propriétaire du compte
+            if(Session::isAdmin() || $_SESSION["user"]->getId() == $id) {
+                // On supprime l'utilisateur
+                $userManager->deleteUser($id);
+            } else {
+                // Message ou action si l'utilisateur n'est pas autorisé a supprimer le compte
+                Session::addFlash("error", "Vous n'êtes pas autorisé a supprimer ce compte");
+            }
+
             // On redirige vers la liste des utilisateurs
             $this->redirectTo("security", "usersList");
 
