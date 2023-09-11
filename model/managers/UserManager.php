@@ -75,4 +75,17 @@
             ]);
         }
 
+        // Requête personnalisé pour supprimer un utilisateur
+        public function deleteUser($id){
+
+            $sql = "
+                DELETE FROM ".$this->tableName." u
+                WHERE u.id_user = :id
+                ";
+
+            return DAO::delete($sql, [
+                "id" => $id
+            ]);
+        }
+
     }

@@ -3,12 +3,13 @@
     $posts = $result["data"]["posts"];
     $isAuteur = (isset($_SESSION["user"]) && ($_SESSION["user"]->getId() == $users->getId()));
     $isAdmin = App\Session::isAdmin();
+    $isBanned = $users->getBannedUntil() !== NULL;
 ?>
 
 <h1>Profile</h1>
 
 <!-- On informe l'utilisateur si son compte est banni et jusqu'à quand -->
-<?php if($isAuteur && $users->getBannedUntil() !== NULL) { ?>
+<?php if($isAuteur && $isBanned) { ?>
 
     <p style="color: red;">Vous êtes banni jusqu'au <?= $users->getBannedUntil() ?></p>
 
@@ -18,14 +19,14 @@
 <?php } ?>
 
 <!-- On informe l'administrateur si le compte est banni et jusqu'à quand -->
-<?php if($isAdmin && $users->getBannedUntil() !== NULL) { ?>
+<?php if($isAdmin && $isBanned) { ?>
 
     <p style="color: red;">Ce compte est banni jusqu'au <?= $users->getBannedUntil() ?></p>
 
     <!-- Bouton pour débannir l'utilisateur -->
     <a href="index.php?ctrl=security&action=unbanUser&id=<?= $users->getId() ?>">Débannir</a>
 
-<?php } elseif($isAdmin && $users->getBannedUntil() == NULL) { ?>
+<?php } elseif($isAdmin && $isBanned) { ?>
     
         <!-- Bouton pour bannir l'utilisateur -->
         <button>Bannir</button>
@@ -43,9 +44,11 @@
 <p>Pseudo : <?= $users->getRole() ?></p>
 
 <!-- On affiche l'email uniquement si c'est l'email de l'utilisateur connecté (en session) -->
-<?php if($isAuteur) { ?>
+<?php if($isAuteur || $isAdmin) { ?>
 
     <p>Email : <?= $users->getEmail() ?></p>
+
+    <a href="index.php?ctrl=security&action=deleteUser&id=<?= $users->getId() ?>">Supprimer ce compte</a>
 
 <?php } ?>
 

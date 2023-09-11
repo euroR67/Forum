@@ -2,7 +2,16 @@
 
 $posts = $result["data"]['posts'];
 $topic = $result["data"]['topic'];
-
+var_dump($topic->getUser());die;
+// On vérifie si l'utilisateur connecté est admin
+$isAdmin = App\Session::isAdmin();
+// On vérifie si l'utilisateur connecté est l'auteur du sujet
+$isAuthor = (!empty($_SESSION["user"]) && isset($_SESSION["user"]) && $_SESSION["user"]->getId() == $topic->getUser()->getId());
+// On vérifie si le compte de $isAuthor existe
+// On vérifie si une session est en cours
+$isSession = isset($_SESSION["user"]);
+// On vérifie que l'utilisateur connecté n'est pas banni
+$isBan = (isset($_SESSION["user"]) && ($_SESSION["user"]->getBannedUntil() == NULL));
 ?>
 <h1> 
     <a href="index.php?ctrl=forum&action=listCategories">Catégories</a> > 
@@ -16,10 +25,6 @@ $topic = $result["data"]['topic'];
             <h2 id="topic-title">Sujet : <?= $topic->getTitre() ?></h2>
 
             <?php 
-            $isAdmin = App\Session::isAdmin();
-            $isAuthor = (isset($_SESSION["user"]) && ($_SESSION["user"]->getId() == $topic->getUser()->getId()));
-            $isSession = isset($_SESSION["user"]);
-            $isBan = (isset($_SESSION["user"]) && ($_SESSION["user"]->getBannedUntil() == NULL));
             // On vérifie que l'utilisateur en session est soit un admin ou l'auteur du sujet pour permettre la modification du titre du sujet
             if(($isSession && $isAuthor && $isBan) || $isAdmin) { ?>
                 <!-- Bouton pour modifier le titre du sujet -->
@@ -39,16 +44,15 @@ $topic = $result["data"]['topic'];
 
             <?php 
             // On vérifie que l'utilisateur est en session pour permettre ou non de répondre a un topic
-            if((!isset($_SESSION["user"]))) { ?>
+            if((!$isSession)) { ?>
                 <a href="index.php?ctrl=security&action=login">Répondre</a>
-            <?php } elseif(($_SESSION["user"]->getBannedUntil() == NULL)) { ?>
+            <?php } elseif($isBan) { ?>
                 <a href="#">Répondre</a>
             <?php } ?>
 
             <?php 
             // On vérifie que l'utilisateur en session est soit un admin ou l'auteur du sujet pour permettre la suppression du topic
-            if((App\Session::isAdmin())
-            || (isset($_SESSION["user"]) && $_SESSION["user"]->getId() == $topic->getUser()->getId()) && ($_SESSION["user"]->getBannedUntil() == NULL)) { ?>
+            if($isAdmin || $isSession && $isAuthor && $isBan) { ?>
                 <?php 
                 if($topic->getClosed() == 0) { ?>
                     <a href="index.php?ctrl=forum&action=lockTopic&id=<?= $topic->getId() ?>">Vérrouiller</a>
@@ -61,8 +65,7 @@ $topic = $result["data"]['topic'];
 
             <?php 
             // On vérifie que l'utilisateur en session est soit un admin ou l'auteur du sujet pour permettre la suppression du topic
-            if((App\Session::isAdmin())
-            || (isset($_SESSION["user"]) && $_SESSION["user"]->getId() == $topic->getUser()->getId()) && ($_SESSION["user"]->getBannedUntil() == NULL)) { ?>
+            if($isAdmin || $isSession && $isAuthor && $isBan) { ?>
                 <a href="index.php?ctrl=forum&action=deleteTopic&id=<?= $topic->getId() ?>">Suppr. Topic</a>
             <?php } ?>
 
@@ -100,11 +103,8 @@ $topic = $result["data"]['topic'];
 
 
         <?php 
-            $isAuthor = (isset($_SESSION["user"]) && ($_SESSION["user"]->getId() == $post->getUser()->getId()));
-            $isAdmin = App\Session::isAdmin();
-            $isNotBanned = (isset($_SESSION["user"]) && ($_SESSION["user"])->getBannedUntil() == NULL);
             // On vérifie que l'utilisateur en session est soit un admin ou l'auteur du sujet pour permettre la modification du post
-            if ($isAuthor && $isNotBanned || $isAdmin) { ?>
+            if ($isAuthor && $isBan || $isAdmin) { ?>
                 <!-- Bouton modifier le post -->
                 <a class="btn-edit-post" href="#">Modifier <i class="uil uil-edit"></i></a>
                 <!-- Formulaire modifier le post avec action vers la méthode editPost du controller -->
@@ -121,8 +121,7 @@ $topic = $result["data"]['topic'];
 
             <?php 
             // On vérifie que l'utilisateur en session est soit un admin ou l'auteur du sujet pour permettre la suppression d'un post
-            if((App\Session::isAdmin())
-            || (isset($_SESSION["user"]) && $_SESSION["user"]->getId() == $post->getUser()->getId() )) { ?>
+            if($isAdmin || $isSession && $_SESSION["user"]->getId() == $post->getUser()->getId()) { ?>
                 <a class="btn-delete" href="index.php?ctrl=forum&action=deletePost&id=<?= $post->getId() ?>">Supprimer</a>
             <?php } ?>
             
@@ -131,7 +130,7 @@ $topic = $result["data"]['topic'];
     <?php } ?>
 
     <?php 
-        if((isset($_SESSION["user"])) && $topic->getClosed() == 0 && ($_SESSION["user"]->getBannedUntil() == NULL)) { ?>
+        if($isSession && $topic->getClosed() == 0 && $isBan) { ?>
 
             <form  action="index.php?ctrl=forum&action=addPost&id=<?= $topic->getId() ?>" method="post" enctype="multipart/form-data">
                 <label>Répondre</label>

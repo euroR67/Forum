@@ -42,9 +42,13 @@ if (empty($topics)) : ?>
                         </a>
                     </td>
                     <td>
-                        <a href="">
-                            <?= $topic->getUser() ?>
-                        </a>
+                        <!-- On affiche le pseudo si l'utilisateur existe sinon on affiche utilisateur supprimée -->
+                        <?php if ($topic->getUser()): ?>
+                            <a href=""><?= $topic->getUser()->getPseudo() ?></a>
+                        <?php else: ?>
+                            <p>Utilisateur supprimé</p>
+                        <?php endif; ?>
+
                     </td>
                     <td><?= $topic->getNbPosts() ?></td>
                     <td>

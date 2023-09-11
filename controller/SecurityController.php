@@ -224,6 +224,19 @@
 
         }
 
+        // Fonction pour supprimer un utilisateur
+        public function deleteUser($id) {
+
+            // On instancie le manager
+            $userManager = new UserManager();
+
+            // On supprime l'utilisateur
+            $userManager->delete($id);
+            // On redirige vers la liste des utilisateurs
+            $this->redirectTo("security", "usersList");
+
+        }
+
     }
 
 ?>
