@@ -45,8 +45,15 @@
                                 // On ajoute l'utilisateur a la base de donnée
                                 $userManager -> add($data);
 
+                                // Si inscription réussi on connecte l'utilisateur
+                                $user = $userManager->findOneByEmail($email);
+                                Session::setUser($user);
+
+                                // Message flash pour confirmer l'inscription
+                                Session::addFlash("success", "Inscription réussi");
+
                                 // Si inscription réussi on redirige vers la page login
-                                $this->redirectTo("security", "login");
+                                $this->redirectTo("forum", "listCategories");
 
                             } else {
                                 // Message ou action au cas ou le mot de passe est trop court
@@ -114,6 +121,9 @@
                                 $userManager->unbanUser($user->getId());
                             }
 
+                            // Message flash pour confirmer l'inscription
+                            Session::addFlash("success", "Connexion réussi");
+
                             // On redirige vers la liste des catégories
                             $this->redirectTo("forum", "listCategories");
                         } else {
@@ -142,105 +152,12 @@
 
             // On retire la session utilisateur (user)
             unset($_SESSION["user"]);
+
+            // Message flash pour confirmer l'inscription
+            Session::addFlash("success", "Déconnexion réussi");
+
             // On redirige vers la liste des catégorie (home) une fois déconnecter
             $this->redirectTo("forum", "listCategories");
-
-        }
-
-        // Fonction pour récupérer les information d'un utilisateur et envoyer a la vue profile.php
-        public function profile($id = NULL) {
-
-            // On instancie les managers
-            $userManager = new UserManager();
-            $postManager = new PostManager();
-
-            // On vérifie qu'il s'agit bien du profil de la personne connecter
-            // Si oui on affiche le profile de l'utilisateur connecter
-            if($id == NULL) {
-                // On récupère l'id de l'utilisateur en session
-                $idUser = $_SESSION["user"]->getId();
-                // On récupère l'utilisateur et l'envoie à la vue
-                return [
-                    "view" => VIEW_DIR."security/profile.php",
-                    "data" => [
-                        "posts" => $postManager->findPostsByUser($idUser),
-                        "user" => $userManager->findOneById($idUser)
-                    ]
-                ];
-            // Sinon on affiche le profile des utilisateurs par leur ID
-            } else {
-                return [
-                    "view" => VIEW_DIR."security/profile.php",
-                    "data" => [
-                        "posts" => $postManager->findPostsByUser($id),
-                        "user" => $userManager->findOneById($id)
-                    ]
-                ];
-            }
-            
-        }
-
-        // Fonction pour récupérer tout les utilisateurs et envoyer a la vue listUsers.php
-        public function usersList(){
-
-            // On instancie les managers
-            $userManager = new UserManager();
-
-            // On récupère les utilisateurs et on les envoie à la vue
-            return [
-                "view" => VIEW_DIR."security/listUsers.php",
-                "data" => [
-                    "users" => $userManager->findAll(["pseudo", "ASC"])
-                ]
-            ];
-
-        }
-
-        // Fonction pour bannir un utilisateur pour une durée déterminé en récupérant la date fourni par l'input type date
-        public function banUser($id) {
-
-            // On instancie le manager
-            $userManager = new UserManager();
-
-            // On récupère la date fourni par l'input type date
-            $bannedUntil = $_POST["bannedUntil"];
-            // On banni l'utilisateur
-            $userManager->banUser($id, $bannedUntil);
-            // On redirige vers la liste des utilisateurs
-            $this->redirectTo("security", "usersList");
-
-        }
-
-        // Fonction pour débannir un utilisateur
-        public function unbanUser($id) {
-
-            // On instancie le manager
-            $userManager = new UserManager();
-
-            // On débanni l'utilisateur
-            $userManager->unbanUser($id);
-            // On redirige vers la liste des utilisateurs
-            $this->redirectTo("security", "usersList");
-
-        }
-
-        // Fonction pour supprimer un utilisateur
-        public function deleteUser($id) {
-
-            // On instancie le manager
-            $userManager = new UserManager();
-
-            // On vérifie que l'action est effectué par un admin ou par le propriétaire du compte
-            if(Session::isAdmin() || $_SESSION["user"]->getId() == $id) {
-                // On supprime l'utilisateur
-                $userManager->deleteUser($id);
-            } else {
-                // Message ou action si l'utilisateur n'est pas autorisé a supprimer le compte
-                Session::addFlash("error", "Vous n'êtes pas autorisé a supprimer ce compte");
-            }
-
-            // On redirige vers la liste des utilisateurs
-            $this->redirectTo("security", "usersList");
 
         }
 

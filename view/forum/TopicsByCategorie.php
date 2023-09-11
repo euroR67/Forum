@@ -44,7 +44,7 @@ if (empty($topics)) : ?>
                     <td>
                         <!-- On affiche le pseudo si l'utilisateur existe sinon on affiche utilisateur supprimée -->
                         <?php if ($topic->getUser()): ?>
-                            <a href=""><?= $topic->getUser()->getPseudo() ?></a>
+                            <a href="index.php?ctrl=forum&action=profile&id=<?= $topic->getUser()->getId() ?>"><?= $topic->getUser()->getPseudo() ?></a>
                         <?php else: ?>
                             <p>Utilisateur supprimé</p>
                         <?php endif; ?>

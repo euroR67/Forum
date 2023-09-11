@@ -48,7 +48,7 @@
 
     <p>Email : <?= $users->getEmail() ?></p>
 
-    <a href="index.php?ctrl=security&action=deleteUser&id=<?= $users->getId() ?>">Supprimer ce compte</a>
+    <a href="index.php?ctrl=forum&action=deleteUser&id=<?= $users->getId() ?>">Supprimer ce compte</a>
 
 <?php } ?>
 

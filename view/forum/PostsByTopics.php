@@ -94,7 +94,7 @@ $isBan = (isset($_SESSION["user"]) && ($_SESSION["user"]->getBannedUntil() == NU
                 <!-- On affiche le pseudo si l'utilisateur existe sinon on affiche utilisateur supprimée -->
                 <?php 
                     if($post->getUser()) { ?>
-                        <a href="index.php?ctrl=security&action=profile&id=<?= $post->getUser()->getId() ?>">
+                        <a href="index.php?ctrl=forum&action=profile&id=<?= $post->getUser()->getId() ?>">
                             <?= $post->getUser() ?>
                         </a>
                     <?php } else { ?>
