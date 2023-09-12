@@ -98,7 +98,7 @@ $isBan = (isset($_SESSION["user"]) && ($_SESSION["user"]->getBannedUntil() == NU
                             <?= $post->getUser() ?>
                         </a>
                     <?php } else { ?>
-                        <p>Utilisateur supprimée</p>
+                        <span>Utilisateur supprimée</span>
                     <?php } ?>
                 
                 <p>Le <?= $post->getDatePost() ?></p>
@@ -133,7 +133,7 @@ $isBan = (isset($_SESSION["user"]) && ($_SESSION["user"]->getBannedUntil() == NU
         <?php if ($nombrePosts > 1) { ?>
             <?php
                 // On vérifie que l'auteur du post existe
-                if(($post->getUser())) {
+                if(($post->getUser() || $isAdmin)) {
                     // On vérifie que l'utilisateur en session est soit un admin ou l'auteur du post pour permettre la suppression d'un post
                     if($isAdmin || $isSession && $_SESSION["user"]->getId() == $post->getUser()->getId()) { ?>
                         <a class="btn-delete" href="index.php?ctrl=forum&action=deletePost&id=<?= $post->getId() ?>">Supprimer</a>
