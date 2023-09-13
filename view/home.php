@@ -1,9 +1,13 @@
-<h1>BIENVENUE SUR LE FORUM</h1>
+<div>
+    <h1>CDA</h1>
+</div>
 
-<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit ut nemo quia voluptas numquam, itaque ipsa soluta ratione eum temporibus aliquid, facere rerum in laborum debitis labore aliquam ullam cumque.</p>
+<div>
+    <h2>Bienvenue sur "CDA" FORUM</h2>
+    <p>Le tout nouveau forum du net!</p>
 
-<p>
-    <a href="/security/login.html">Se connecter</a>
-    <span>&nbsp;-&nbsp;</span>
-    <a href="/security/register.html">S'inscrire</a>
-</p>
+    <div class="search-container">
+      <input type="text" placeholder="Entrée un mot clé.." name="search">
+      <button type="submit"><i class="fa fa-search"></i></button>
+    </div>
+</div>
