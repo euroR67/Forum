@@ -104,3 +104,153 @@ nav ul li {
 
 /* Main présentation */
 
+.main-home .logo {
+    background-color: #364253;
+    color: #fff;
+    padding-block: 20px;
+    border-bottom: 1px solid rgba(166, 159, 159, 0.298);
+}
+
+.main-home .logo h1 {
+    text-align: center;
+    font-size: 64px;
+}
+
+.main-home .welcome {
+    background-color: #364253;
+    padding-block: 40px;
+    color: #fff;
+}
+
+.main-home .welcome h2 {
+    text-align: center;
+    font-size: 32px;
+    text-transform: uppercase;
+}
+
+.main-home .welcome p {
+    text-align: center;
+    font-size: 24px;
+    font-style: italic;
+    font-weight: 400;
+    line-height: 132.523%;
+    width: 70%;
+    margin: auto;
+}
+
+/* Search bar */
+
+.search-container {
+    width: 90%;
+    position: relative;
+    padding-block: 35px;
+    margin: auto;
+}
+
+.search-container input[type=text] {
+    padding: 20px;
+    font-size: 17px;
+    border: 1px solid grey;
+    width: 100%;
+    background: #303B4B;
+}
+
+/* couleur du placeholder de l'input en blanc */
+.search-container input[type=text]::placeholder {
+    color: #fff;
+}
+
+.search-container button {
+    position: absolute;
+    right: 0;
+    padding: 21px 26px;
+    background: #1D84B5;
+    color: #fff;
+    font-size: 17px;
+    border: none;
+    cursor: pointer;
+}
+
+/* Fin search bar */
+
+/* Fin main présentation */
+
+/* Join us ! */
+
+.join-us {
+    background-color: #1D84B5;
+    padding: 40px 30px;
+    color: #fff;
+    width: 95%;
+    margin: auto;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.join-us h3 {
+    font-size: 24px;
+    margin-block: 15px;
+    width: fit-content;
+}
+
+.join-us p {
+    font-size: 16px;
+    font-style: italic;
+    color: #1E1E1E;
+    line-height: 168.023%;
+}
+
+.join-us a {
+    color: #fff;
+    background-color: #364253;
+    padding: 15px 20px;
+    width: fit-content;
+}
+
+.forums {
+    width: 95%;
+    margin: auto;
+    margin-block: 20px;
+    border: 1px solid #A69F9F;
+}
+
+.forums h3 {
+    color: #464646;
+    background-color: #F1F1F1;
+    width: 100%;
+    padding: 10px;
+    font-size: 20px;
+}
+
+.forums ul {
+    padding: 10px;
+}
+
+.forums ul li {
+    position: relative;
+}
+
+.forums ul li a {
+    color: black;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.forums ul li p {
+    font-size: 16px;
+    font-style: italic;
+    font-weight: 300;
+    line-height: 168.023%;
+}
+
+.forums .closed {
+    background-color: #FF5A5F;
+    padding: 3px;
+    font-size: 10px;
+    border-radius: 5px;
+    color: #fff;
+    position: absolute;
+    top: 0;
+}
