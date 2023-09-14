@@ -277,6 +277,7 @@ nav ul li {
     font-weight: 300;
     line-height: 168.023%;
     width: 70%;
+    color: #5c5d5e;
 }
 
 .forums .closed {
@@ -295,6 +296,91 @@ nav ul li {
 
 .mobile-none {
     display: none;
+}
+
+/* File d'ariange */
+
+.file-ariane {
+    background-color: #E8E8E8;
+    border-left: 3px solid #1D84B5;
+    width: 95%;
+    margin: auto;
+    padding: 13px 10px;
+    margin-block: 15px;
+}
+
+.file-ariane h2 {
+    display: flex;
+    align-items: baseline;
+    font-size: 16px;
+    gap: 5px;
+    color: #2E2E2E;
+    font-weight: 600;
+}
+
+.file-ariane h2 a {
+    color: #2E2E2E;
+    font-weight: 400;
+    transition: all 0.2s ease-in-out;
+}
+
+.file-ariane h2 i:not(:first-child) {
+    font-size: 12px;
+    color: #2E2E2E;
+}
+
+/* Fin file d'ariane */
+
+/* Liste des sujets */
+
+.topics-container {
+    width: 95%;
+    margin: auto;
+    margin-block: 20px;
+}
+
+.topics-container table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #c2bebe;
+}
+
+.topics-container table tr:first-child {
+    background-color: #E8E8E8;
+    color: #464646;
+}
+
+.topics-container table tr th:first-child:not(:last-child) {
+    text-align: start;
+    padding: 10px;
+    color: #464646;
+}
+
+.topics-container table tr:not(:first-child) td {
+    padding: 10px;
+}
+
+.topics-container table .topic-title {
+    color: #1E1E1E;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.topics-container .madeby {
+    font-size: 16px;
+    font-style: italic;
+    font-weight: 300;
+}
+
+.topics-container .madeby .author {
+    color:#065980;
+    font-style: normal;
+}
+
+.topics-container .nb-post {
+    text-align: center;
+    font-weight: 600;
+    color: #171d22;
 }
 
 /* Début footer */

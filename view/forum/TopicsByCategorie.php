@@ -20,7 +20,14 @@ $categories = $result["data"]['categories'];
     </div>
 </div>
 
-<h1> <a href="index.php?ctrl=forum&action=listCategories">Catégories</a> > <?=$categories->getNomCategorie()?></h1>
+<div class="file-ariane">
+    <h2>
+        <a href="index.php?ctrl=forum&action=listCategoriesHome"><i class="fa-solid fa-house"></i></a>
+        <i class="fa-solid fa-chevron-right"></i>
+        <a href="index.php?ctrl=forum&action=listCategories">Catégories</a> <i class="fa-solid fa-chevron-right"></i>
+        <?=$categories->getNomCategorie()?>
+    </h2>
+</div>
 
 
 <div class="topics-container">
@@ -30,11 +37,6 @@ $categories = $result["data"]['categories'];
     if((isset($_SESSION["user"])) && ($_SESSION["user"]->getBannedUntil() == NULL)) { ?>
         <div class="btn-add">
             <a class="nv_sujet" href="#">Nouveau Sujet</a>
-        </div>
-        <!-- Si non si l'utilisateur est pas banni ou que aucune session n'est en cours -->
-    <?php } elseif((!isset($_SESSION["user"])) || ($_SESSION["user"]->getBannedUntil() == NULL)) { ?>
-        <div class="btn-add">
-            <a class="nv_sujet" href="index.php?ctrl=security&action=login">Nouveau Sujet</a>
         </div>
     <?php } ?>
 
@@ -51,21 +53,21 @@ if (empty($topics)) : ?>
             <?php foreach($topics as $topic) : ?>
                 <tr>
                     <td>
-                        <a href="index.php?ctrl=forum&action=listPostsByTopic&id=<?= $topic->getId() ?>">
+                        <a class="topic-title" href="index.php?ctrl=forum&action=listPostsByTopic&id=<?= $topic->getId() ?>">
                             <?= $topic->getTitre() ?>
                         </a>
-                        <p>Crée par : 
-                            <!-- On affiche le pseudo si l'utilisateur existe sinon on affiche utilisateur supprimée -->
+                        <!-- On affiche le pseudo si l'utilisateur existe sinon on affiche utilisateur supprimée -->
                         <?php if ($topic->getUser()): ?>
-                            <a href="index.php?ctrl=forum&action=profile&id=<?= $topic->getUser()->getId() ?>"><?= $topic->getUser()->getPseudo() ?></a>
+                            <p class="madeby">Crée par : 
+                            <a class="author" href="index.php?ctrl=forum&action=profile&id=<?= $topic->getUser()->getId() ?>"><?= $topic->getUser()->getPseudo() ?></a>
+                            </p>
                         <?php else: ?>
                             <p>Utilisateur supprimé</p>
                         <?php endif; ?>
-                        </p>
                     </td>
                     
-                    <td><?= $topic->getNbPosts() ?></td>
-                    <td>
+                    <td class="nb-post"><?= $topic->getNbPosts() ?></td>
+                    <td class="mobile-none">
                     <?php
                         $lastPostDateStr = $topic->getLastPostDate(); // Récupérer la date du dernier post au format chaîne
 
@@ -76,11 +78,11 @@ if (empty($topics)) : ?>
                         if ($lastPostDate !== false) { // Vérifier si la conversion a réussi
                             if ($lastPostDate->format('Y-m-d') === $currentDate->format('Y-m-d')) {
                                 ?>
-                                <p class="mobile-none"><?= $lastPostDate->format('H:i:s') ?></p>
+                                <p><?= $lastPostDate->format('H:i:s') ?></p>
                                 <?php
                             } else {
                                 ?>
-                                <p class="mobile-none"><?= $lastPostDate->format('d/m/Y') ?></p>
+                                <p><?= $lastPostDate->format('d/m/Y') ?></p>
                                 <?php
                             }
                         } else {
@@ -93,7 +95,9 @@ if (empty($topics)) : ?>
         </table>
     </div>
     <?php endif; ?>
-
+    <div class="file-ariane">
+        <p>Vous devez être connecter pour créer un nouveau sujet.</p>
+    </div>
     <?php 
     // On vérifie que l'utilisateur en session pour permettre ou non la création d'un nouveau topic
     if((isset($_SESSION["user"])) && ($_SESSION["user"]->getBannedUntil() == NULL)) { ?>
