@@ -28,10 +28,15 @@ header > a {
     text-align: center;
 }
 
+header > a:hover {
+    background-color: #0072a78a;
+}
+
 header .bars {
     display: flex;
     align-items: center;
     gap: 5px;
+    cursor: pointer;
 }
 
 header .bars span {
@@ -40,6 +45,7 @@ header .bars span {
 }
 
 nav {
+    z-index: 2;
     position: absolute;
     background-color: #1D84B5;
     top: 0;
@@ -52,7 +58,6 @@ nav {
 
 nav.active {
     left: 0;
-    z-index: 2;
 }
 
 nav ul {
@@ -104,31 +109,31 @@ nav ul li {
 
 /* Main présentation */
 
-.main-home .logo {
+.logo {
     background-color: #364253;
     color: #fff;
     padding-block: 20px;
     border-bottom: 1px solid rgba(166, 159, 159, 0.298);
 }
 
-.main-home .logo h1 {
+.logo h1 {
     text-align: center;
     font-size: 64px;
 }
 
-.main-home .welcome {
+.welcome {
     background-color: #364253;
     padding-block: 40px;
     color: #fff;
 }
 
-.main-home .welcome h2 {
+.welcome h2 {
     text-align: center;
     font-size: 32px;
     text-transform: uppercase;
 }
 
-.main-home .welcome p {
+.welcome p {
     text-align: center;
     font-size: 24px;
     font-style: italic;
@@ -153,6 +158,17 @@ nav ul li {
     border: 1px solid grey;
     width: 100%;
     background: #303B4B;
+    outline: none;
+    color: #fff;
+    transition: all 0.3s ease-in-out;
+}
+
+.search-container input[type=text]:hover {
+    border: 1px solid #065980;
+}
+
+.search-container input[type=text]:focus {
+    border: 1px solid #1D84B5;
 }
 
 /* couleur du placeholder de l'input en blanc */
@@ -169,6 +185,10 @@ nav ul li {
     font-size: 17px;
     border: none;
     cursor: pointer;
+}
+
+.search-container button:hover {
+    background: #28adeb;
 }
 
 /* Fin search bar */
@@ -207,7 +227,16 @@ nav ul li {
     background-color: #364253;
     padding: 15px 20px;
     width: fit-content;
+    transition: all 0.3s ease-in-out;
 }
+
+.join-us a:hover {
+    background-color: #364253d3;
+}
+
+/* Fin join us ! */
+
+/* Début forums */
 
 .forums {
     width: 95%;
@@ -224,18 +253,22 @@ nav ul li {
     font-size: 20px;
 }
 
-.forums ul {
-    padding: 10px;
-}
-
 .forums ul li {
     position: relative;
+    border-top: 1px solid #A69F9F;
+    padding: 10px;
+    min-height: 100px;
 }
 
 .forums ul li a {
     color: black;
     font-size: 24px;
     font-weight: 600;
+    transition: all 0.2s ease-in-out;
+}
+
+.forums ul li a:hover {
+    color: #1D84B5;
 }
 
 .forums ul li p {
@@ -243,6 +276,7 @@ nav ul li {
     font-style: italic;
     font-weight: 300;
     line-height: 168.023%;
+    width: 70%;
 }
 
 .forums .closed {
@@ -252,5 +286,60 @@ nav ul li {
     border-radius: 5px;
     color: #fff;
     position: absolute;
-    top: 0;
+    top: 10px;
+}
+
+/* Fin forums */
+
+/* Début liste des sujets */
+
+.mobile-none {
+    display: none;
+}
+
+/* Début footer */
+
+footer {
+    background-color: #364253;
+    color: #fff;
+    padding: 30px 20px;
+}
+
+footer p a {
+    color: #fff;
+    text-decoration: underline;
+}
+
+footer .social {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    align-items: center;
+    margin-top: 25px;
+}
+
+footer .social a {
+    border: 1px solid #95959559;
+    padding: 5px;
+    border-radius: 100%;
+    width: 54px;
+    height: 54px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease-in-out;
+}
+
+footer .social a i {
+    color: #C7C7C7;
+    font-size: 20px;
+    transition: all 0.2s ease-in-out;
+}
+
+footer .social a:hover {
+    border: 1px solid #fff;
+}
+
+footer .social a:hover i {
+    color: #fff;
 }

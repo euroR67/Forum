@@ -43,6 +43,22 @@
             ];
 
         }
+
+        // Méthode pour récupérer les catégories et les envoyer à la vue
+        public function listCategoriesHome(){
+
+            // On instancie le manager
+            $categorieManager = new CategorieManager();
+
+            // On récupère les catégories et on les envoie à la vue
+            return [
+                "view" => VIEW_DIR."home.php",
+                "data" => [
+                    "categories" => $categorieManager->findAll(["nomCategorie", "ASC"])
+                ]
+            ];
+
+        }
         
         // Méthode pour récupérer les topics d'une catégorie et les envoyer à la vue
         public function listTopicsByCategorie($id) {

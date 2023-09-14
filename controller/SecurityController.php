@@ -157,7 +157,7 @@
             Session::addFlash("success", "Déconnexion réussi");
 
             // On redirige vers la liste des catégorie (home) une fois déconnecter
-            $this->redirectTo("forum", "listCategories");
+            $this->redirectTo("forum", "listCategoriesHome");
 
         }
 

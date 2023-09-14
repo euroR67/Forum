@@ -24,7 +24,7 @@
         <nav>
             <h2>CDA Forum</h2>
             <ul>
-                <li><a href="index.php?ctrl=forum&action=listCategories"><i class="fa-solid fa-house"></i> Accueil</a></li>
+                <li><a href="index.php?ctrl=forum&action=listCategoriesHome"><i class="fa-solid fa-house"></i> Accueil</a></li>
                 <?php
                 if(App\Session::getUser()){ ?>
                     <li><a href="index.php?ctrl=forum&action=profile"><span class="fas fa-user"></span>&nbsp;<?= App\Session::getUser()?></a></li>
@@ -52,6 +52,7 @@
                 <?php } ?>
         <div class="overlay"></div>
     </header>
+    
 
     <script>
 
@@ -89,8 +90,14 @@
     </main>
 
     <footer>
-        <p>&copy; 2020 - Forum CDA - <a href="/home/forumRules.html">Règlement du forum</a> - <a href="">Mentions légales</a></p>
-        <!--<button id="ajaxbtn">Surprise en Ajax !</button> -> cliqué <span id="nbajax">0</span> fois-->
+        <p>© 2023 - Forum CDA - <br><a href="#">Règlement du forum</a> - <a href="#">Mentions légales</a></p><br>
+        <p>Made by <i class="fa-brands fa-linkedin"></i> <a href="https://www.linkedin.com/in/mansour-chamaev">Mansour Chamaev</a></p>
+        <div class="social">
+            <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="#"><i class="fa-brands fa-twitter"></i></a>
+            <a href="#"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#"><i class="fa-brands fa-github"></i></a>
+        </div>
     </footer>
 
     <script

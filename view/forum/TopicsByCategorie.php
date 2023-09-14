@@ -5,6 +5,21 @@ $categories = $result["data"]['categories'];
 
 ?>
 
+<div class="main-topics">
+    <div class="logo">
+        <h1>CDA</h1>
+    </div>
+    <div class="welcome">
+        <h2><?= $categories->getNomCategorie() ?></h2>
+        <p>Ici on donne un bref détail de la catégorie</p>
+
+        <div class="search-container">
+            <input type="text" placeholder="Rechercher un sujet.." name="search">
+            <button type="submit"><i class="fa fa-search"></i></button>
+        </div>
+    </div>
+</div>
+
 <h1> <a href="index.php?ctrl=forum&action=listCategories">Catégories</a> > <?=$categories->getNomCategorie()?></h1>
 
 
@@ -29,10 +44,9 @@ if (empty($topics)) : ?>
 <?php else : ?>
         <table border=1>
             <tr>
-                <th>Sujet</th>
-                <th>Auteur</th>
-                <th>NB Mess</th>
-                <th>Dernier msg</th>
+                <th>SUJET</th>
+                <th><i class="fa-solid fa-comments"></i></th>
+                <th class="mobile-none">Dernier msg</th>
             </tr>
             <?php foreach($topics as $topic) : ?>
                 <tr>
@@ -40,34 +54,38 @@ if (empty($topics)) : ?>
                         <a href="index.php?ctrl=forum&action=listPostsByTopic&id=<?= $topic->getId() ?>">
                             <?= $topic->getTitre() ?>
                         </a>
-                    </td>
-                    <td>
-                        <!-- On affiche le pseudo si l'utilisateur existe sinon on affiche utilisateur supprimée -->
+                        <p>Crée par : 
+                            <!-- On affiche le pseudo si l'utilisateur existe sinon on affiche utilisateur supprimée -->
                         <?php if ($topic->getUser()): ?>
                             <a href="index.php?ctrl=forum&action=profile&id=<?= $topic->getUser()->getId() ?>"><?= $topic->getUser()->getPseudo() ?></a>
                         <?php else: ?>
                             <p>Utilisateur supprimé</p>
                         <?php endif; ?>
-
+                        </p>
                     </td>
+                    
                     <td><?= $topic->getNbPosts() ?></td>
                     <td>
-                        <?php
-                            $lastPostDateStr = $topic->getLastPostDate(); // Récupérer la date du dernier post au format chaîne
-                            
-                            // Convertir la date du dernier post en objet DateTime avec un format spécifique
-                            $lastPostDate = DateTime::createFromFormat('d/m/Y, H:i:s', $lastPostDateStr);
-                            $currentDate = new DateTime();
-                            
-                            if ($lastPostDate !== false) { // Vérifier si la conversion a réussi
-                                if ($lastPostDate->format('Y-m-d') === $currentDate->format('Y-m-d')) {
-                                    echo $lastPostDate->format('H:i:s');
-                                } else {
-                                    echo $lastPostDate->format('d/m/Y');
-                                }
+                    <?php
+                        $lastPostDateStr = $topic->getLastPostDate(); // Récupérer la date du dernier post au format chaîne
+
+                        // Convertir la date du dernier post en objet DateTime avec un format spécifique
+                        $lastPostDate = DateTime::createFromFormat('d/m/Y, H:i:s', $lastPostDateStr);
+                        $currentDate = new DateTime();
+
+                        if ($lastPostDate !== false) { // Vérifier si la conversion a réussi
+                            if ($lastPostDate->format('Y-m-d') === $currentDate->format('Y-m-d')) {
+                                ?>
+                                <p class="mobile-none"><?= $lastPostDate->format('H:i:s') ?></p>
+                                <?php
                             } else {
-                                echo "Date invalide"; // En cas de conversion échouée
+                                ?>
+                                <p class="mobile-none"><?= $lastPostDate->format('d/m/Y') ?></p>
+                                <?php
                             }
+                        } else {
+                            echo "Date invalide"; // En cas de conversion échouée
+                        }
                         ?>
                     </td>
                 </tr>
