@@ -55,35 +55,41 @@
     
 
     <script>
+    // Script pour le menu slide version mobile
 
-        // Script pour le menu slide version mobile
+    // On récupère les éléments du DOM
+    const bars = document.querySelector(".bars");
+    const nav = document.querySelector("nav");
+    const overlay = document.querySelector(".overlay");
 
-        // On récupère les éléments du DOM
-        const bars = document.querySelector(".bars")
-        const nav = document.querySelector("nav")
-        const overlay = document.querySelector(".overlay")
+    // Fonction pour activer/désactiver la scroll
+    function toggleScroll() {
+        if (overlay.classList.contains("active-overlay")) {
+            document.body.style.overflow = "hidden";
+        } else {
+            document.body.style.overflow = "auto";
+        }
+    }
 
-        // On écoute l'événement click sur l'élément bars
-        bars.addEventListener("click", function(){
-            // On ajoute la classe active à nav
-            nav.classList.add("active")
-            // On ajoute la classe active à overlay
-            overlay.classList.add("active-overlay")
-            // Lorsque l'on clique sur overlay, on retire la classe active à nav et overlay
-            overlay.addEventListener("click", function(){
-                nav.classList.remove("active")
-                overlay.classList.remove("active-overlay")
-            })
-            // Si la navbar active on désactive le scroll
-            if(nav.classList.contains("active")){
-                document.body.style.overflow = "hidden"
-            }
-            else{
-                document.body.style.overflow = "auto"
-            }
-        })
+    // On écoute l'événement click sur l'élément bars
+    bars.addEventListener("click", function () {
+        // On ajoute la classe active à nav
+        nav.classList.add("active");
+        // On ajoute la classe active à overlay
+        overlay.classList.add("active-overlay");
+        // On active/désactive le scroll
+        toggleScroll();
+    });
 
-    </script>
+    // Lorsque l'on clique sur overlay, on retire la classe active à nav et overlay
+    overlay.addEventListener("click", function () {
+        nav.classList.remove("active");
+        overlay.classList.remove("active-overlay");
+        // On active/désactive le scroll
+        toggleScroll();
+    });
+</script>
+
     
     <main id="forum">
         <?= $page ?>
